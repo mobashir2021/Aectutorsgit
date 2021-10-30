@@ -1,0 +1,63 @@
+﻿<div class="modal fade" id="newinvoiceinvalidate" tabindex="-1" role="dialog" aria-labelledby="newinvoiceinvalidate" aria-hidden="true"
+     data-bind="dialog: showUpdatePaymentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="newinvoiceinvalidateh">Update Payment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+
+
+                    <form id="frmchangeattendance">
+
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Invoice Id</th>
+                                    <th>Invoice Ref No</th>
+                                    <th>Payment Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span data-bind="text:SelectedInvoice().Name"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: SelectedInvoice().Id"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: SelectedInvoice().InvoiceNo"></span>
+                                    </td>
+
+                                    <td>
+                                        <input class="date paymentDateInput" type="text" name="PaymentDate" autocomplete="off" data-bind="dateFormat1: SelectedInvoice().Reciept().PaymentDate, datePattern: 'DD/MM/YYYY'"
+                                               id="updateinvoicepaymentDate" />
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-default pull-right" type="button" id="newinvoicesaveid" data-bind="click:updateInvoicePaymentDetails ">
+                                    Save
+                                </button>
+                                <button data-bind="click:hideEditInvoiceDialog " class="btn btn-default pull-right" type="button" id="newinvoicecloseid">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br /><br />
+                    <p style="text-align: center; font-style: italic; font-size: 10pt"></p>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

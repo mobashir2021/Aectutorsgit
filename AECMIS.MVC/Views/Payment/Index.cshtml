@@ -1,0 +1,149 @@
+﻿@using AECMIS.MVC.Binders
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Invoice Management";
+
+}
+@model AECMIS.DAL.Domain.DTO.InvoiceSearchResultDto
+<div id="divMain">
+    <h2>Search Data</h2>
+    <input type="hidden" data-bind="value:SearchCriteria.PageSize" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="studentNo">Student No.</label>
+                    <input class="form-control" type="text" id="studentNo" data-bind="value:SearchCriteria.StudentNo" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input class="form-control" type="text" id="firstName" data-bind="value:SearchCriteria.FirstName" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input class="form-control" type="text" id="lastName" data-bind="value:SearchCriteria.LastName" />
+                </div>
+            </div>
+        </div>
+        <div class="row form-horizontal">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="from">From</label>
+                    <div class="col-md-9">
+                        <input class="form-control date" type="text" id="from" data-bind="value:SearchCriteria.DateGeneratedFrom" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="to">To</label>
+                    <div class="col-md-9">
+                        <input class="form-control date" type="text" id="to" data-bind="value:SearchCriteria.DateGeneratedTo" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="status">Status</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="status" name="status" data-bind="options:InvoiceStatuses,optionsCaption:'--select--', optionsText:'Text',optionsValue:'Value',value:SearchCriteria.InvoiceStatus"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                @*<button class="btn-sm" type="button" data-bind="click:ExportExcel" id="exportexcelid">Export Excel</button>*@
+
+                <input class="btn btn-default pull-left" type="button" value="Search" data-bind="click:Search" />
+                <input class="btn btn-default pull-left" type="button" value="Export Excel" data-bind="click:ExportExcel" />
+            </div>
+        </div>
+
+		<div class="table-responsive">
+			<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<td>Invoice Id</td>
+						<td>Student No.</td>
+						<td>Student Name</td>
+						<td>Total Amount</td>
+						<td>Date Of Generation</td>
+						<td>Status</td>
+
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: Data">
+					<tr>
+						<td data-bind="text: Id"></td>
+						<td data-bind="text: StudentNo"></td>
+						<td data-bind="text: Name"></td>
+						<td data-bind="text: TotalAfterDiscount"></td>
+						<td data-bind="text: DateOfGeneration"></td>
+						<td data-bind="text: Status"></td>
+						<td class="buttons">
+							<div data-bind="visible: !IsPaymentDone && IsProcessed">
+								<button class="btn btn-default" type="button" data-bind="click: $root.makePayment">Make Payment</button>
+							</div>
+							<a class="btn" data-bind="click: $root.view" href="#" title="view"><span class="glyphicon glyphicon-eye-open"></span></a>
+							<a class="btn" data-bind="click: $root.download" href="#" title="download"><span class="glyphicon glyphicon-download-alt"></span></a>
+							<a class="btn" data-bind="click: $root.invalidate, visible: IsProcessed" href="#" title="invalidate"><span class="glyphicon glyphicon-remove"></span></a>
+							<a class="btn" data-bind="click: $root.edit, visible: IsPaymentDone" href="#" title="edit"><span class="glyphicon glyphicon-edit"></span></a>
+							@*<button class="btn btn-default" type="button" data-bind="click:OpenSearchDialog"><span class="glyphicon glyphicon-plus"></span> Create Invoice</button>*@
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+					</div>
+        <div class="pagination" data-bind="if:Data().length > 0" id="pagerContainer">
+            @Html.Partial("_pager")
+        </div>
+        
+        <!-- Modal -->
+        @Html.Partial("Invoice")
+        @Html.Partial("InvalidateInvoicePartial")
+        @Html.Partial("NewInvoiceForInvalidate")
+        @Html.Partial("MakePaymentDialog")
+        @Html.Partial("_captureAdminPassword")
+        @Html.Partial("_MakePaymentSaveResult")
+        @Html.Partial("UpdatePaymentDialog")
+
+        @*@Html.Partial("_studentSearch")*@
+    </div>
+</div>
+<script src="@Url.Content("~/js/UIDialog.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/invoiceSearchViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/pagerViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/adminPassword.js")" type="text/javascript"></script>
+
+@*<script src="@Url.Content("~/js/studentSearchViewModel.js")" type="text/javascript"></script>*@
+<script type="text/javascript">
+    $(function () {
+
+                
+var viewModel = new SearchViewModel(@Html.Raw(Model.SerializeObject()));
+    viewModel.InvoiceStatuses = @Html.Raw(ViewData["InvoiceStatuses"].SerializeObject());
+    viewModel.AttendanceStatuses = @Html.Raw(ViewData["AttendanceStatuses"].SerializeObject());
+    viewModel.paymentTypes = @Html.Raw(ViewData["PaymentTypes"].SerializeObject());
+        viewModel.PaymentPlans = @Html.Raw(ViewData["PaymentPlans"].SerializeObject());
+
+
+        ko.applyBindingsWithValidation(viewModel, $("#divMain")[0], {
+            insertMessages: false,
+            decorateInputElement: true,
+            errorElementClass: "input-validation-error",
+            errorClass: "input-validation-error",
+            messagesOnModified: true,
+            decorateElementOnModified: false
+        });
+
+    //ko.applyBindings(viewModel, $("#divMain")[0]);
+ });
+
+</script>
+
+

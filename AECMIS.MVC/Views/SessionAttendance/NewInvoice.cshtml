@@ -1,0 +1,75 @@
+﻿<div class="modal fade" id="dialognewinvoice" tabindex="-1" role="dialog" aria-labelledby="newinvoice"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="newinvoices">
+                    New Invoice
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <input type="hidden" name="studentnonewinvoice" id="studentnonewinvoice" />
+                    <input type="hidden" name="newinvoicesessionattendanceid" id="newinvoicesessionattendanceid" />
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <td class="nowrap">
+                                    Invoice No.
+                                </td>
+                                <td>
+                                    PaymentType
+                                </td>
+                                <td>
+                                    Payment
+                                </td>
+                                <td>
+                                    Payment Date
+                                </td>
+                                <td class="nowrap">
+                                    Cheque No.
+                                </td>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                <label></label>
+                            </td>
+                            <td>
+                                <select id="newinvoicepaymentType" name="paymentType" data-bind="options:$root.lstPaymentTypeMain, optionsText:'PaymentTypeDesc',optionsValue:'PaymentTypeId', value: $root.PaymentTypeSelectedMain"></select>
+                            </td>
+                            <td>
+                                <select id="newinvoicepaymentplan" name="paymentPlan" data-bind="options:$root.lstPaymentPlanMain, optionsText:'PaymentPlanValue',optionsValue:'PaymentPlanId', value: $root.PaymentPlanSelectedMain"></select>
+                            </td>
+                            <td>
+                                <input class="date paymentDateInput" type="text" name="PaymentDate"
+                                       readonly="readonly" id="newinvoicepaymentDate" />
+                            </td>
+                            <td>
+                                <div>
+                                @*<div data-bind="if:$root.PaymentType() == 3002">*@
+                                    <input type="text" id="newinvoicechequeNo" name="chequeNo" data-bind="value: $root.ChequeNo()"
+                                           maxlength="6" class="chequeInput" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-default pull-right" type="button" id="newinvoicesaveid">
+                                Save
+                            </button>
+                            <button data-bind="click: closenewinvoice" class="btn btn-default pull-right" type="button" id="newinvoicecloseid">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

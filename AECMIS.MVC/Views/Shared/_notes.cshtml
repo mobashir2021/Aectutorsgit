@@ -1,0 +1,29 @@
+﻿<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="notes" aria-hidden="true" 
+    data-bind="dialog: IsNotesDialogOpen">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-bind="click: $root.CloseNotesDialog">&times;</button>
+                <h4 class="modal-title" id="notes">Notes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row" data-bind="with: $root.SelectedSessionAttendance">
+                        <div class="col-md-12">
+                            <label>Previous Notes</label>
+                            <textarea class="form-control" data-bind="text: $root.SelectedSessionAttendance().PreviousNotes" rows="9"
+                                cols="5" readonly></textarea>
+                            <label>Current Notes</label>
+                            <textarea class="form-control" data-bind="value: $root.SelectedSessionAttendance().Notes" rows="5" cols="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-default" type="button" value="Close" data-bind="click: $root.CloseNotesDialog">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

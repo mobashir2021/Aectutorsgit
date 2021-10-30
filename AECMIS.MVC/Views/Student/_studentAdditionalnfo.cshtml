@@ -1,0 +1,39 @@
+﻿<fieldset class="no-border">
+    <legend></legend>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: SuffersIllness">Suffers Illness
+                </label>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <label>Illness Details</label>
+            <textarea  class="form-control" data-bind="value:IllnessDetails, enable:SuffersIllness" rows="2" cols="10" maxlength="150"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: AccessToComputer">Has Access To A Computer
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: IsMemberOfClubOrSociety">Is Member of Club Or Society?
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: IsMemberOfClubOrSociety">Hobbies and Interests
+                </label>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <label>Hobbies And Interests</label>
+            <textarea class="form-control" data-bind="value:HobbiesAndInterests" rows="3" cols="3" maxlength="400"></textarea>
+        </div>
+    </div>
+</fieldset>

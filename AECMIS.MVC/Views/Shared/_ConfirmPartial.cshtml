@@ -1,0 +1,29 @@
+﻿<div class="modal fade" id="confirmationDialog" tabindex="-1" role="dialog" aria-labelledby="notes"
+     aria-hidden="true" data-bind="dialog: $root.ConfirmationViewModel.ShowConfirmationDialog()" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-bind="click: $root.ConfirmationViewModel.CloseDialog()">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="results">
+                    Warning!
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row" style="height: 88%" data-bind="text:$root.ConfirmationViewModel.Text()">
+
+
+                    </div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row">
+                        <button class="btn btn-default" type="button" value="Continue" data-bind="click: $root.ConfirmationViewModel.ExecuteAction()">Continue</button>
+                        <button class="btn btn-default" type="button" value="Close" data-bind="click: $root.ConfirmationViewModel.CloseDialog()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

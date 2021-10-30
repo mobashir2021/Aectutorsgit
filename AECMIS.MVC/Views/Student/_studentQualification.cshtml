@@ -1,0 +1,30 @@
+﻿<div data-bind="foreach:Qualifications">
+    <fieldset class="no-border">
+        <legend>Qualification Details</legend>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input class="form-control" type="text" data-bind="value: Subject, uniqueName: true" maxlength="40" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Result</label>
+                    <input class="form-control" type="text" data-bind="value: Result, uniqueName: true" maxlength="10" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Year</label>
+                    <input class="form-control" type="text" data-bind="value: Year, uniqueName: true" maxlength="4" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" data-bind="click: $parent.removeQualification">Remove</button>
+                </div>
+            </div>
+        </div>     
+    </fieldset>
+</div>

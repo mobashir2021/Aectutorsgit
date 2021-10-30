@@ -1,0 +1,44 @@
+﻿<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="notes"
+    aria-hidden="true" data-bind="dialog: IsSaveStatusDialogOpen" data-backdrop="static" data-keyboard="false" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="results">
+                    Results</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div  class="row" data-bind="with:$root.SaveStatus" style="height: 88%">
+                        <label data-bind="text: Message">
+                        </label>
+                        <div data-bind="if:Success">
+                            <div class="list-group" data-bind="foreach: NavigationActions">
+                                <a class="list-group-item" data-bind="attr: {href: Url}"><span class="glyphicon glyphicon-chevron-right"></span> <span data-bind="text: Text"></span></a>
+                            </div>
+                        </div>
+                        <div class="list-group" data-bind="ifnot: Success">
+                            <a class="list-group-item" href="#" data-bind="click:$root.CloseSaveStatusDialog"><span class="glyphicon glyphicon-chevron-right"></span> <span>Go back to fix issue</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="saveStatusDialog" class="hide" data-bind="dialog: {autoOpen: false, title: 'Results', draggable:false, modal:true,resizable:false, width:450, height:250, closeOnEscape: false, open: function(event, ui){$('.ui-dialog-titlebar-close', this.parentNode).hide();} }, dialogVisible: IsSaveStatusDialogOpen">
+    <div data-bind="with:$root.SaveStatus" style="height: 88%">
+        <label data-bind="text: Message">
+        </label>
+        <div data-bind="if:Success">
+            <ul data-bind="foreach: NavigationActions">
+                <li><a data-bind="text: Text, attr: {href: Url}"></a></li>
+            </ul>
+        </div>
+        <ul data-bind="ifnot: Success">
+            <li><a data-bind="click:$root.CloseSaveStatusDialog" href="#">Go back to fix issue</a>
+            </li>
+        </ul>
+    </div>
+</div>
+*@

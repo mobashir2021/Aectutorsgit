@@ -1,0 +1,71 @@
+﻿<div data-bind="foreach:EducationInstitutes">
+<fieldset>
+    <legend>Current Education Details</legend>
+    <div class="row">
+        <a class="pull-right" href="#" data-bind="click: $parent.removeEducationInstitute" title="Delete">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+    </div>
+    <div class="row form-horizontal">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="firstName" data-bind="value: Name, uniqueName: true" maxlength="50" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Institute Type</label>
+                <div class="col-sm-9">
+                    <select class="form-control" data-bind="options: $root.instituteTypes, optionsCaption: '--select--', optionsText: 'Text', optionsValue: 'Value', value: Type">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-bind="template: { name: 'address-template', data: Address }"></div>
+
+    <div class="row form-horizontal">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Teacher</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" data-bind="value: Teacher, uniqueName: true" maxlength="50" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Student No.</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" data-bind="value: StudentNo, uniqueName: true" maxlength="30" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-horizontal">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">From</label>
+                <div class="input-group">
+                    <input type="text" class="form-control date" data-bind="datepicker: From,datepickerOptions:{ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange:$root.MinYear+':'+$root.MaxYear}, uniqueName: true" readonly="readonly"/>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"> 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">To</label>
+                <div class="input-group">
+                    <input type="text" class="form-control date" data-bind="datepicker: To, datepickerOptions:{ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange:$root.MinYear+':'+$root.MaxYear}, uniqueName: true" readonly="readonly"/>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default pull-right" data-bind="click: $root.addQualification" type="button">Add Qualification</button>
+    </div>
+    <div data-bind="template: { name: 'qualification-template', data: $data }"></div>
+</fieldset>
+</div>

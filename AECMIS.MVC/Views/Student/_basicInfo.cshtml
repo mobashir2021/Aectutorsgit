@@ -1,0 +1,83 @@
+﻿<fieldset>
+    <legend>Childs Details</legend>
+    <div class="row">
+        <div data-bind="if: Image">
+            <div class="col-md-4">
+                <img class="img-thumbnail" data-bind="attr: { src: ImageSrc }" alt="Expense image" />
+                 <input type="file"  accept="image/*" name="expenseImage" title="Change Image" 
+                    data-bind="file: ImageFile, fileObjectURL: ImageObjectURL, imageBase64: Image, imageType: ImageType" />
+            </div>
+        </div>
+        <div data-bind="ifnot: Image">
+            <div class="col-md-4">
+                 <input type="file"  accept="image/*" name="expenseImage" title="Change Image" 
+                    data-bind="file: ImageFile, fileObjectURL: ImageObjectURL, imageBase64: Image, imageType: ImageType" />                
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+               
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>First Name</label>
+                <input class="form-control" type="text" id="firstName" name="firstName" data-bind="value: FirstName" maxlength="20" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Middle Name</label>
+                <input class="form-control" type="text" id="middleName" name="middleName" data-bind="value: MiddleName" maxlength="20" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Last Name</label>
+                <input class="form-control" type="text" id="lastName" name="lastName" data-bind="value: LastName" maxlength="20" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Gender</label>
+                <select class="form-control" data-bind="options: genders, optionsCaption: '--select--', optionsText: 'Text', optionsValue: 'Value', value: Gender" name="gender"></select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>DOB</label>
+                <div class="input-group">
+                  <input class="form-control date" type="text" data-bind="datepicker:DateOfBirth, datepickerOptions:{ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange:MinYear+':'+MaxYear}" id="dateOfBirth" name="dateOfBirth" readonly="readonly" />
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Nationality</label>
+                <input class="form-control" type="text" data-bind="value: Nationality" maxlength="40"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-horizontal">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-4 control-label">1st Language</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="text" data-bind="value: FirstLanguage" maxlength="20"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: Enabled">Account Enabled
+                </label>
+            </div>
+        </div>
+    </div>      
+</fieldset>

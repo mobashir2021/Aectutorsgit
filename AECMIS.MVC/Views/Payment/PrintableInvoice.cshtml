@@ -1,0 +1,122 @@
+﻿@{
+    Layout = null;
+}
+@using AECMIS.DAL.Domain.Enumerations
+@model AECMIS.DAL.Domain.DTO.InvoiceViewModel
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+    <body>
+        <div style="border: solid 1px;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="text-align: left; vertical-align: bottom;">
+                        <h3 style="font-weight: bold">AEC Tutors</h3>
+                        <h5>221A High Street North, East Ham, London, E6 1JG, UK
+                        </h5>
+                        <h5>Phone No: 0208 548 1312</h5>
+                        <h5>VAT No: <b>326570795</b></h5>
+                    </td>
+                    <td style="text-align: right;">
+                        
+                        <img src="@Html.DisplayTextFor(x => x.LogoPath)" alt="AEC" height="100" width="100" />
+                    </td>
+                </tr>
+            </table>
+        <br />
+        <h2 style="font-weight: bold">Invoice Information</h2>
+        <table style="border: solid; height: 150px; width: 100%;">
+            <tr>
+                <td style="font-weight: bold">Invoice Id:</td>
+                <td>@Html.DisplayTextFor(x => x.Id) </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Invoice Ref No:</td>
+                <td>@Html.DisplayTextFor(x => x.InvoiceNo) </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Student No:</td>
+                <td>@Html.DisplayTextFor(x => x.StudentNo) </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Name:</td>
+                <td>@Html.DisplayTextFor(x => x.Name)</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Total:</td>
+                <td>@Html.DisplayTextFor(x => x.Total)</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Discount Amount:</td>
+                <td>@Html.DisplayTextFor(x => x.Discount)</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Total To Pay:</td>
+                <td>@Html.DisplayTextFor(x => x.TotalAfterDiscount)</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">@Html.DisplayTextFor(x => x.VATLabel)</td>
+                <td>@Html.DisplayTextFor(x => x.VATAmount)</td>
+            </tr>
+
+            <tr>
+                <td style="font-weight: bold">Generation Date:</td>
+                <td>@Html.DisplayTextFor(x => x.DateOfGeneration)</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Session Credits:</td>
+                <td>@Html.DisplayTextFor(x => x.SessionCredits)</td>
+            </tr>
+        </table>
+        @if (Model.Reciept == null)
+        {
+            <h3>Please can you make the payment at your earliest convenience</h3>
+        }
+        else
+        {
+            <h3>This invoice has been paid please see reciept details below</h3>
+            <br />
+            <h2 style="font-weight: bold">Reciept Information</h2>
+            <table style="border: solid; height: 150px; width: 100%;">
+                <tr>
+                    <td style="font-weight: bold">Amount Paid:</td>
+                    <td>@Html.DisplayTextFor(x => x.Reciept.AmountPaid) </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Payment Date:</td>
+                    <td>@Html.DisplayTextFor(x => x.Reciept.PaymentDate) </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">Payment Type:</td>
+                    <td>@Html.DisplayTextFor(x => x.Reciept.PaymentType) </td>
+                </tr>
+                @if (Model.Reciept.PaymentType == PaymentType.Cheque.ToString())
+                {
+                    <tr>
+                        <td style="font-weight: bold">Cheque No:</td>
+                        <td>@Html.DisplayTextFor(x => x.Reciept.ChequeNo) </td>
+                    </tr>    
+                }
+                <tr>
+                    <td style="font-weight: bold">No Of Sessions:</td>
+                    <td>@Html.DisplayTextFor(x => x.Reciept.NumberOfSessionsPaidFor) </td>
+                </tr>
+            </table>
+    
+        
+        }
+        <br /><br />
+    
+    
+        <p style="text-align: center; font-style: italic; font-size: 10pt">
+         
+        </p>
+        
+        </div>
+    </body>
+</html>

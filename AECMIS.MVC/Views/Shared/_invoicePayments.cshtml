@@ -1,0 +1,69 @@
+﻿<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="outstandingPayments"
+    aria-hidden="true" data-bind="dialog: IsPaymentsDialogOpen" data-backdrop="static" data-keyboard="false" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <h4 class="modal-title" id="outstandingPayments">
+                    Outstanding Payments</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" data-bind="with: $root.SelectedSessionAttendance">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <td class="nowrap">
+                                    Invoice No.
+                                </td>
+                                <td>
+                                    PaymentType
+                                </td>
+                                <td>
+                                    Payment
+                                </td>
+                                <td>
+                                    Payment Date
+                                </td>
+                                <td class="nowrap">
+                                    Cheque No.
+                                </td>
+                            </tr>
+                        </thead>
+                        <tr data-bind="repeat: { foreach: $root.SelectedSessionAttendance().OutstandingPayments }">
+                            <td>
+                                <label data-bind="text:$item().InvoiceId"></label>
+                            </td>
+                            <td>
+                                <select id="paymentType" name="paymentType" data-bind="options: $root.paymentTypes, optionsCaption: '--select--', optionsText: 'Text', optionsValue: 'Value', value: $item().PaymentType">
+                                </select>
+                            </td>
+                            <td>
+                                <select id="payment" name="payment" data-bind="options: $item().PaymentPlans, optionsCaption: '--select--', optionsText: 'PaymentAmountInCurrency', optionsValue: 'Id', value: $item().PaymentAmount">
+                                </select>
+                            </td>
+                            <td>
+                                <input class="date paymentDateInput" type="text" data-bind="datepicker:$item().PaymentDate, datepickerOptions:{ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: false, yearRange:'2000:2016'}, uniqueName: true"
+                                    readonly="readonly" />
+                            </td>
+                            <td>
+                                <div data-bind="if: $item().PaymentType() == 3002 ">
+                                    <input type="text" id="chequeNo" name="chequeNo" data-bind="value: $item().ChequeNo"
+                                        maxlength="6" class="chequeInput" />
+                                </div> 
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-default pull-right" type="button"  data-bind="click: $root.ClosePaymentsDialog">
+                                Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

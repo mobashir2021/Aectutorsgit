@@ -1,0 +1,108 @@
+﻿@using AECMIS.MVC.Binders
+@using Newtonsoft.Json
+@model AECMIS.Service.DTO.StudentDetailsDto
+@{
+    ViewBag.Title = "StudentDetails";
+}
+
+
+@using (Html.BeginForm("SaveStudent", "Student", FormMethod.Post, new { @id = "___mainForm" }))
+{
+    @Html.ValidationSummary(false)
+
+    <h2>StudentDetails</h2>
+
+    <input type="hidden" name="model" id="model" />
+    <ul data-bind="foreach: errors" class="validation-summary-errors">
+        <li data-bind="text: $data"></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Personal Information</h4>
+                @Html.Partial("_basicInfo")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <h4>Contact Details <button type="button" class="btn btn-default pull-right" data-bind="click:addContact">Add Additional Contact</button></h4>
+                </div>
+                @Html.Partial("_contactPersonDetails")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <h4>Study Plan</h4>
+                </div>
+                @Html.Partial("_studyPlanDetails")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <h4>Education Details<button type="button" class="btn btn-default pull-right" data-bind="click:addEducationInstitute">Add Education Details</button></h4>
+                </div>
+                @Html.Partial("_studentEducationDetails")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <h4>Additional Info</h4>
+                </div>
+                @Html.Partial("_studentAdditionalnfo")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" data-bind="click: Save">Save</button>
+                    <button type="button" class="btn btn-default" data-bind="click:Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("_ConfirmPartial")
+}
+<script type="text/html" id="address-template">
+    @Html.Partial("_addressDetails")
+</script>
+<script type="text/html" id="contact-template">
+    @Html.Partial("_contactDetails")
+</script>
+<script type="text/html" id="qualification-template">
+    @Html.Partial("_studentQualification")
+</script>
+
+
+<script src="@Url.Content("~/js/studentDetailsViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/KODatePicker.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/confirmation.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/UIDialog.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/ajaxoverlay.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var viewModel = new StudentViewModel(@Html.Raw(Model.SerializeObject()));
+
+        viewModel.genders = ko.mapping.fromJS(@Html.Raw(JsonConvert.SerializeObject(ViewData["Genders"])));
+        viewModel.relationTypes = ko.mapping.fromJS(@Html.Raw(JsonConvert.SerializeObject(ViewData["RelationTypes"])));
+        viewModel.curriculumTypes = ko.mapping.fromJS(@Html.Raw(JsonConvert.SerializeObject(ViewData["CurriculumTypes"])));
+        viewModel.allPaymentPlans = @Html.Raw(JsonConvert.SerializeObject(ViewData["PaymentPlans"]));
+        //viewModel.allSessions = @Html.Raw(JsonConvert.SerializeObject(ViewData["Sessions"]));
+        viewModel.instituteTypes = @Html.Raw(JsonConvert.SerializeObject(ViewData["InstituteTypes"]));
+        viewModel.titleTypes = @Html.Raw(JsonConvert.SerializeObject(ViewData["TitleTypes"]));
+
+        ko.applyBindingsWithValidation(viewModel,$("#___mainForm")[0], {
+            insertMessages: false,
+            decorateInputElement: true,
+            errorElementClass: "input-validation-error",
+            errorClass:"input-validation-error",
+            messagesOnModified: true,
+            decorateElementOnModified:false
+        });
+    });
+</script>

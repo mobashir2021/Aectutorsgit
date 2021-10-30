@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+    <changeSet author="aali" id="002.A">
+        <sql>
+      <![CDATA[
+      
+    INSERT INTO contact.RelationType
+    SELECT 'Mother', 0
+    UNION ALL
+    SELECT 'Father', 1
+    UNION ALL
+    SELECT 'Brother', 2
+    UNION ALL
+    SELECT 'Sister', 3
+    UNION ALL
+    SELECT 'Uncle', 4
+    UNION ALL
+    SELECT 'Aunt', 5
+    UNION ALL
+    SELECT 'GrandFather', 6
+
+
+    INSERT INTO payment.InvoiceType
+    SELECT 'Advanced',0
+    UNION ALL
+    SELECT 'Daily', 1
+    
+    
+    INSERT INTO payment.InvoiceStatus
+    SELECT 'Pending',0
+    UNION ALL
+    SELECT 'Paid', 1
+    UNION ALL
+    SELECT 'Cancelled', 1
+    
+
+    INSERT INTO student.InstituteType
+    SELECT 'Nursery',0
+    UNION ALL
+    SELECT 'Infant', 1
+    UNION ALL
+    SELECT 'Primary', 2
+    UNION ALL
+    SELECT 'Junior', 2
+    UNION ALL
+    SELECT 'Secondary', 3
+    UNION ALL
+    SELECT 'Sixth Form', 4
+    UNION ALL
+    SELECT 'College', 5
+    UNION ALL
+    SELECT 'University', 6
+    UNION ALL
+    SELECT 'Training Centre', 7
+
+    INSERT INTO timetable.Curriculum
+    SELECT 'Key Stage 1', 0
+    UNION ALL
+    SELECT 'Key Stage 2', 1
+    UNION ALL
+    SELECT '11+', 2
+    UNION ALL
+    SELECT '13+', 3
+    UNION ALL
+    SELECT 'Key Stage 3', 4
+    UNION ALL
+    SELECT 'GCSE', 5
+    UNION ALL
+    SELECT 'A ''Level', 6
+    UNION ALL
+    SELECT 'Diploma', 7
+    UNION ALL
+    SELECT 'Undergraduate', 8
+    UNION ALL
+    SELECT 'Post Graduate', 9
+
+
+    INSERT INTO timetable.DaysOfWeek
+    SELECT 'Monday', 0
+    UNION ALL
+    SELECT 'Tuesday', 1
+    UNION ALL
+    SELECT 'Wednesday', 2
+    UNION ALL
+    SELECT 'Thursday', 3
+    UNION ALL
+    SELECT 'Friday', 4
+    UNION ALL
+    SELECT 'Saturday', 5
+    UNION ALL
+    SELECT 'Sunday', 6
+    ;
+    
+    INSERT INTO timetable.SessionRegisterStatus
+    SELECT 'Pending', 0
+    UNION ALL
+    SELECT 'Processed', 1
+    ;
+    
+    INSERT INTO student.GenderType
+SELECT 'Male', 0
+UNION ALL
+SELECT 'Female', 1
+;
+
+
+		INSERT INTO timetable.SessionAttendanceStatus
+		SELECT   'Attended', 1
+        ;
+ 
+		INSERT INTO timetable.SessionAttendanceStatus
+		SELECT   'AuthorizeAbsence', 0
+        ;
+		INSERT INTO timetable.SessionAttendanceStatus
+		SELECT  'UnAuthorizedAbsence', 0
+        ;
+  
+		INSERT INTO payment.PaymentType
+		SELECT   'Cash', 1
+        ;
+     
+		INSERT INTO payment.PaymentType
+		SELECT   'Cheque', 0
+        ;
+        
+        INSERT INTO payment.PaymentType
+		SELECT   'None', 0
+        ; 
+             ]]>
+
+  </sql>
+</changeSet>
+
+    <changeSet author="aali" id="002.B">
+        <sql>
+      <![CDATA[
+      
+        create table [teacher].[TeacherAttendance] (
+       Id  int IDENTITY(1,1) NOT NULL,
+       TeacherId int not null,
+       [Day] DATETIME NOT NULL,
+       TimeStarted DATETIME Not NULL,
+       TimeEnded DATETIME not null,
+       NumberOfLessonsWorked int not null,
+       NumberOfHoursWorked int,
+       ExtraTimeInMins int,
+       ExtraWork varchar(500),
+       TeacherCoveredFor int,
+       Paid money null,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [teacher].[TeacherAttendance]
+ADD CONSTRAINT [FK_TeacherAttendance_TeacherID] FOREIGN KEY([TeacherId])
+REFERENCES [teacher].[teacher] ([Id])
+;
+
+ALTER TABLE [teacher].[TeacherAttendance]
+ADD CONSTRAINT [FK_TeacherAttendance_TeacherCoveredForID] FOREIGN KEY([TeacherCoveredFor])
+REFERENCES [teacher].[teacher] ([Id])
+;
+      
+        ]]>
+
+  </sql>
+</changeSet>
+
+    <changeSet author="aali" id="002.C">
+        <sql>
+            <![CDATA[
+      
+ALTER TABLE [timetable].[Session]
+ALTER COLUMN ToTime Time(0) not null
+;
+
+ALTER TABLE [timetable].[Session]
+ALTER COLUMN FromTime Time(0) not null
+;
+      
+        ]]>
+
+        </sql>
+    </changeSet>
+
+  <changeSet author="aali" id="002.D">
+    <sql>
+      <![CDATA[
+
+
+ALTER TABLE student.student
+DROP COLUMN StudentNo
+;
+
+ALTER TABLE student.student
+ADD StudentNo AS 'S' + RIGHT('000000' + CAST(ID AS VARCHAR(10)), 6) PERSISTED
+;
+
+ALTER TABLE [contact].[ContactPerson]
+ADD IsPrimaryContact bit NOT NULL
+;
+
+ALTER TABLE student.EducationInstitute
+ALTER COLUMN Name varchar(50)
+;
+
+ALTER TABLE student.EducationInstitute
+ALTER COLUMN Teacher varchar(50)
+;
+
+ALTER TABLE student.EducationInstitute
+ALTER COLUMN [From] date
+;
+
+ALTER TABLE student.EducationInstitute
+ALTER COLUMN [To] date
+;
+      ]]>
+    </sql>
+    
+  </changeSet>
+      
+</databaseChangeLog>

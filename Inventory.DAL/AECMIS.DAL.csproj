@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D76FB6A4-34A2-4513-A588-59E2DE569037}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AECMIS.DAL</RootNamespace>
+    <AssemblyName>AECMIS.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.1.2\lib\net461\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.4.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=5.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.5.2.5\lib\net461\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.2.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.111.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.111.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.111.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Domain\Address.cs" />
+    <Compile Include="Domain\AttendanceCredit.cs" />
+    <Compile Include="Domain\Automapper\AutomapperBootStrap.cs" />
+    <Compile Include="Domain\Automapper\InvoiceToInvoiceSearchResultRow.cs" />
+    <Compile Include="Domain\Automapper\InvoiceToInvoiceViewModel.cs" />
+    <Compile Include="Domain\Automapper\SessionRegisterToRegisterSearchResultRow.cs" />
+    <Compile Include="Domain\Automapper\PaymentAmountToDiscountedPaymentAmount.cs" />
+    <Compile Include="Domain\Automapper\StudentsToStudentSearchResultRow.cs" />
+    <Compile Include="Domain\Automapper\TeacherAttendanceToDailyTeacherAttendance.cs" />
+    <Compile Include="Domain\CreditNote.cs" />
+    <Compile Include="Domain\DTO\CreateNewInvoiceViewModel.cs" />
+    <Compile Include="Domain\DTO\InvoiceSearchResultDto.cs" />
+    <Compile Include="Domain\DTO\InvoiceSearchResultRow.cs" />
+    <Compile Include="Domain\DTO\InvoiceViewModel.cs" />
+    <Compile Include="Domain\DTO\ReceiptViewModel.cs" />
+    <Compile Include="Domain\DTO\RegisterSearchResultDto.cs" />
+    <Compile Include="Domain\DTO\RegisterSearchResultRow.cs" />
+    <Compile Include="Domain\DTO\SearchInvoiceDto.cs" />
+    <Compile Include="Domain\DTO\SearchRegisterDto.cs" />
+    <Compile Include="Domain\DTO\SearchSessionDto.cs" />
+    <Compile Include="Domain\DTO\SearchSubjectDto.cs" />
+    <Compile Include="Domain\DTO\StudentAttendanceDetails.cs" />
+    <Compile Include="Domain\DTO\StudentNoteDto.cs" />
+    <Compile Include="Domain\DTO\StudentSearchDto.cs" />
+    <Compile Include="Domain\DTO\StudentSearchResultRow.cs" />
+    <Compile Include="Domain\DTO\StudentSearchResultDto.cs" />
+    <Compile Include="Domain\DTO\SubjectViewModel.cs" />
+    <Compile Include="Domain\DTO\TeacherAttendanceDto.cs" />
+    <Compile Include="Domain\DTO\DailyTeacherAttendance.cs" />
+    <Compile Include="Domain\Enumerations\Gender.cs" />
+    <Compile Include="Domain\Enumerations\PaymentType.cs" />
+    <Compile Include="Domain\Enumerations\SessionRegisterStatus.cs" />
+    <Compile Include="Domain\Enumerations\TitleTypes.cs" />
+    <Compile Include="Domain\Extensions\DatesExtensions.cs" />
+    <Compile Include="Domain\Extensions\EnumExtensions.cs" />
+    <Compile Include="Domain\Extensions\SessionExtensions.cs" />
+    <Compile Include="Domain\Helpers\PasswordHash.cs" />
+    <Compile Include="Domain\Helpers\Users.cs" />
+    <Compile Include="Domain\InvoiceSequencing.cs" />
+    <Compile Include="Domain\SessionRegister.cs" />
+    <Compile Include="Domain\TeacherAttendance.cs" />
+    <Compile Include="Domain\DTO\DiscountedPaymentAmount.cs" />
+    <Compile Include="Domain\DTO\SessionRegisterViewModel.cs" />
+    <Compile Include="Domain\DTO\SessionSubjectAttendanceModel.cs" />
+    <Compile Include="Domain\DTO\StudentSubjectViewModel.cs" />
+    <Compile Include="Domain\Enumerations\InvoicePaymentType.cs" />
+    <Compile Include="Domain\Enumerations\InvoiceStatus.cs" />
+    <Compile Include="Domain\Invoice.cs" />
+    <Compile Include="Domain\Contact.cs" />
+    <Compile Include="Domain\ContactPerson.cs" />
+    <Compile Include="Domain\Contracts\IAddress.cs" />
+    <Compile Include="Domain\Contracts\IContact.cs" />
+    <Compile Include="Domain\Contracts\IPerson.cs" />
+    <Compile Include="Domain\EducationInstitute.cs" />
+    <Compile Include="Domain\Entity.cs" />
+    <Compile Include="Domain\Enumerations\SessionAttendanceStatus.cs" />
+    <Compile Include="Domain\Enumerations\Curriculum.cs" />
+    <Compile Include="Domain\Enumerations\InstituteType.cs" />
+    <Compile Include="Domain\Enumerations\RelationType.cs" />
+    <Compile Include="Domain\PaymentReciept.cs" />
+    <Compile Include="Domain\PaymentPlan.cs" />
+    <Compile Include="Domain\Qualification.cs" />
+    <Compile Include="Domain\Session.cs" />
+    <Compile Include="Domain\SessionAttendance.cs" />
+    <Compile Include="Domain\Student.cs" />
+    <Compile Include="Domain\StudentSubject.cs" />
+    <Compile Include="Domain\StudentSubjectId.cs" />
+    <Compile Include="Domain\Subject.cs" />
+    <Compile Include="Domain\SubjectAttendance.cs" />
+    <Compile Include="Domain\Teacher.cs" />
+    <Compile Include="Domain\TuitionCentre.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\InvoicePayment.cs" />
+    <Compile Include="Domain\VATDetails.cs" />
+    <Compile Include="Nhibernate\Conventions\EnumsConvention.cs" />
+    <Compile Include="Nhibernate\Criteria\DetachedQuery.cs" />
+    <Compile Include="Nhibernate\CustomDialect.cs" />
+    <Compile Include="Nhibernate\Interceptors\CustomInterceptors.cs" />
+    <Compile Include="Nhibernate\Mappings\AddressMap.cs" />
+    <Compile Include="Nhibernate\Mappings\AttendanceCreditMap.cs" />
+    <Compile Include="Nhibernate\Mappings\BaseMap.cs" />
+    <Compile Include="Nhibernate\Mappings\InvoicePaymentMap.cs" />
+    <Compile Include="Nhibernate\Mappings\InvoiceSequencingMap.cs" />
+    <Compile Include="Nhibernate\Mappings\RoleMap.cs" />
+    <Compile Include="Nhibernate\Mappings\SessionRegisterMap.cs" />
+    <Compile Include="Nhibernate\Mappings\TeacherAttendanceMap.cs" />
+    <Compile Include="Nhibernate\Mappings\InvoiceMap.cs" />
+    <Compile Include="Nhibernate\Mappings\ContactPersonMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\ContactMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\EducationInstituteMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\PaymentRecieptMap.cs" />
+    <Compile Include="Nhibernate\Mappings\PaymentPlanMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\QualificationMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\SessionAttendanceMap.cs" />
+    <Compile Include="Nhibernate\Mappings\SessionMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\StudentMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\StudentSubjectMap.cs" />
+    <Compile Include="Nhibernate\Mappings\SubjectAttendanceMap.cs" />
+    <Compile Include="Nhibernate\Mappings\SubjectMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\TeacherMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\TuitionCentreMapping.cs" />
+    <Compile Include="Nhibernate\Mappings\UserMap.cs" />
+    <Compile Include="Domain\UserRole.cs" />
+    <Compile Include="Nhibernate\Mappings\UserRoleMap.cs" />
+    <Compile Include="Nhibernate\Mappings\VATDetailsMap.cs" />
+    <Compile Include="Nhibernate\Repositories\InvoiceRepository.cs" />
+    <Compile Include="Nhibernate\Repositories\SessionAttendanceRepository.cs" />
+    <Compile Include="Nhibernate\Repositories\StudentRepository.cs" />
+    <Compile Include="Nhibernate\Repositories\TeacherRepository.cs" />
+    <Compile Include="Nhibernate\Repositories\Repository.cs" />
+    <Compile Include="Nhibernate\Repositories\IRepository.cs" />
+    <Compile Include="Nhibernate\Repositories\UserRepository.cs" />
+    <Compile Include="Nhibernate\SessionManager.cs" />
+    <Compile Include="Nhibernate\Strategy\ISessionStrategy.cs" />
+    <Compile Include="Nhibernate\Strategy\SingletonStrategy.cs" />
+    <Compile Include="Nhibernate\Strategy\WebStrategy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\CompositeValidator.cs" />
+    <Compile Include="Validation\InvoiceIsConvertibleToDaily.cs" />
+    <Compile Include="Validation\InvoicePaymentRecieptValidator.cs" />
+    <Compile Include="Validation\InvoiceIsPayable.cs" />
+    <Compile Include="Validation\SessionAttendanceValidator.cs" />
+    <Compile Include="Validation\TuitionCentreValidator.cs" />
+    <Compile Include="Validation\ValidationExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

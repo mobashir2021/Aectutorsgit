@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">  
+  
+  
+  <changeSet author="snavaz" id="001.A">
+    <sql>
+      <![CDATA[
+
+DROP TABLE [timetable].[AttendanceCredit];
+		
+    CREATE TABLE [timetable].[AttendanceCredit](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[InvoiceReceiptId] [int] NOT NULL,
+	[AttendanceId] [int] NULL,
+	[CreatedBy] [int] NOT NULL,
+	[ModifiedBy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+
+
+ALTER TABLE [timetable].[AttendanceCredit]  WITH CHECK ADD  CONSTRAINT [FK_AttendanceCredit_AttendanceId] FOREIGN KEY([AttendanceId])
+REFERENCES [timetable].[SessionAttendance] ([Id])
+;
+
+ALTER TABLE [timetable].[AttendanceCredit] CHECK CONSTRAINT [FK_AttendanceCredit_AttendanceId]
+;
+
+ALTER TABLE [timetable].[AttendanceCredit]  WITH CHECK ADD  CONSTRAINT [FK_AttendanceCredit_CreatedByUserId] FOREIGN KEY([CreatedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [timetable].[AttendanceCredit] CHECK CONSTRAINT [FK_AttendanceCredit_CreatedByUserId]
+;
+
+ALTER TABLE [timetable].[AttendanceCredit]  WITH CHECK ADD  CONSTRAINT [FK_AttendanceCredit_InvoiceReceiptId] FOREIGN KEY([InvoiceReceiptId])
+REFERENCES [payment].[InvoiceReciept] ([Id])
+;
+
+ALTER TABLE [timetable].[AttendanceCredit] CHECK CONSTRAINT [FK_AttendanceCredit_InvoiceReceiptId]
+;
+
+ALTER TABLE [timetable].[AttendanceCredit]  WITH CHECK ADD  CONSTRAINT [FK_AttendanceCredit_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [timetable].[AttendanceCredit] CHECK CONSTRAINT [FK_AttendanceCredit_ModifiedByUserId]
+;
+   
+
+ ]]>
+      
+    </sql>
+  </changeSet> 
+  
+  <changeSet author="snavaz" id="002.A">
+    <sql>
+      <![CDATA[
+	  
+
+ALTER TABLE [timetable].[SessionAttendance]  DROP CONSTRAINT [FK_PaymentAmount_SessionAttendanceId];
+Alter Table [timetable].[SessionAttendance] Drop Column [PaymentAmountId];
+
+ALTER TABLE [timetable].[SessionAttendance]  DROP CONSTRAINT [FK_SessionAttendance_PaymentType];
+Alter Table [timetable].[SessionAttendance] Drop Column [PaymentType];
+
+Alter Table [timetable].[SessionAttendance] Drop Column [ChequeNo];
+
+Alter Table [timetable].[SessionAttendance] Drop Column [RemainingCredits];
+	  
+	  ]]>
+      
+    </sql>
+  </changeSet> 
+  
+ <changeSet author="snavaz" id="003.A">
+    <sql>
+      <![CDATA[
+
+ALTER TABLE [payment].[InvoicePayment] DROP CONSTRAINT [FK_InvoicePayment_PaymentType]
+;
+
+ALTER TABLE [payment].[InvoicePayment] DROP CONSTRAINT [FK_InvoicePayment_PaymentID]
+;
+
+ALTER TABLE [payment].[InvoicePayment] DROP CONSTRAINT [FK_InvoicePayment_ModifiedByUserId]
+;
+
+ALTER TABLE [payment].[InvoicePayment] DROP CONSTRAINT [FK_InvoicePayment_InvoiceId]
+;
+
+ALTER TABLE [payment].[InvoicePayment] DROP CONSTRAINT [FK_InvoicePayment_CreatedByUserId]
+;
+
+ALTER TABLE [payment].[InvoicePayment] DROP CONSTRAINT [FK_InvoicePayment_AttendanceId]
+;
+
+ALTER TABLE [payment].[InvoiceReciept] DROP CONSTRAINT [FK_InvoiceReciept_PaymentId]
+;
+
+DROP TABLE [payment].[InvoicePayment]
+;
+
+CREATE TABLE [payment].[Payment](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[NumberOfSessionsPaidFor] [int] NULL,
+	[AmountPaid] [money] NULL,
+	[PaymentDate] [date] NULL,
+	[InvoiceId] [int] NULL,
+	[PaymentType] [int] NULL,
+	[ChequeNo] [varchar](30) NULL,
+	[AttendanceId] [int] NULL,
+	[PaymentId] [int] NULL,
+	[CreatedBy] [int] NOT NULL,
+	[ModifiedBy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+
+ALTER TABLE [payment].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_AttendanceId] FOREIGN KEY([AttendanceId])
+REFERENCES [timetable].[SessionAttendance] ([Id])
+;
+
+ALTER TABLE [payment].[Payment] CHECK CONSTRAINT [FK_Payment_AttendanceId]
+;
+
+ALTER TABLE [payment].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_CreatedByUserId] FOREIGN KEY([CreatedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[Payment] CHECK CONSTRAINT [FK_Payment_CreatedByUserId]
+;
+
+ALTER TABLE [payment].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_InvoiceId] FOREIGN KEY([InvoiceId])
+REFERENCES [payment].[Invoice] ([Id])
+;
+
+ALTER TABLE [payment].[Payment] CHECK CONSTRAINT [FK_Payment_InvoiceId]
+;
+
+ALTER TABLE [payment].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[Payment] CHECK CONSTRAINT [FK_Payment_ModifiedByUserId]
+;
+
+ALTER TABLE [payment].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_PaymentID] FOREIGN KEY([PaymentId])
+REFERENCES [payment].[PaymentPlan] ([Id])
+;
+
+ALTER TABLE [payment].[Payment] CHECK CONSTRAINT [FK_Payment_PaymentID]
+;
+
+ALTER TABLE [payment].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_PaymentType] FOREIGN KEY([PaymentType])
+REFERENCES [payment].[PaymentType] ([Id])
+;
+
+ALTER TABLE [payment].[Payment] CHECK CONSTRAINT [FK_Payment_PaymentType]
+;
+
+
+ALTER TABLE [payment].[InvoiceReciept]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceReciept_PaymentId] FOREIGN KEY([PaymentId])
+REFERENCES [payment].[Payment] ([Id])
+;
+
+ALTER TABLE [payment].[InvoiceReciept] CHECK CONSTRAINT [FK_InvoiceReciept_PaymentId]
+;
+
+	  
+	  ]]>
+      
+    </sql>
+  </changeSet> 
+  
+  <changeSet author="snavaz" id="004.A">
+    <sql>
+      <![CDATA[
+	  
+
+CREATE TABLE [payment].[CreditNote](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[InvoiceId] [int] NULL,
+	[Notes] [nvarchar](500) NULL,
+	[CreatedBy] [int] NOT NULL,
+	[ModifiedBy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+
+
+ALTER TABLE [payment].[CreditNote]  WITH CHECK ADD  CONSTRAINT [FK_CreditNote_CreatedByUserId] FOREIGN KEY([CreatedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[CreditNote] CHECK CONSTRAINT [FK_CreditNote_CreatedByUserId]
+;
+
+ALTER TABLE [payment].[CreditNote]  WITH CHECK ADD  CONSTRAINT [FK_CreditNote_InvoiceId] FOREIGN KEY([InvoiceId])
+REFERENCES [payment].[Invoice] ([Id])
+;
+
+ALTER TABLE [payment].[CreditNote] CHECK CONSTRAINT [FK_CreditNote_InvoiceId]
+;
+
+ALTER TABLE [payment].[CreditNote]  WITH CHECK ADD  CONSTRAINT [FK_CreditNote_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[CreditNote] CHECK CONSTRAINT [FK_CreditNote_ModifiedByUserId]
+;
+
+	  
+	  ]]>
+      
+    </sql>
+  </changeSet> 
+  <changeSet  author="snavaz" id="005.A">
+    <sql>
+      <![CDATA[
+  
+ALTER TABLE [payment].[Invoice] Add  [InvoiceRefNumber] [int] NULL;
+
+ALTER TABLE [payment].[Invoice] Add  [VATAmount] [decimal](10, 2) NULL;
+
+ALTER TABLE [payment].[Invoice] Add  [TotalExcludeVAT] [decimal](10, 2) NULL;
+
+
+CREATE TABLE [payment].[InvoiceSequencing](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FiscalYear] [int] NOT NULL,
+	[FromDate] [datetime] NOT NULL,
+	[ToDate] [datetime] NOT NULL,
+	[SequenceStartNum] [int] NOT NULL,
+	[SequenceEndNum] [int] NOT NULL,
+	[CreatedBy] [int] NOT NULL,
+	[ModifiedBy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+
+ALTER TABLE [payment].[InvoiceSequencing]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceSequencing_CreatedByUserId] FOREIGN KEY([CreatedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[InvoiceSequencing] CHECK CONSTRAINT [FK_InvoiceSequencing_CreatedByUserId]
+;
+
+ALTER TABLE [payment].[InvoiceSequencing]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceSequencing_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[InvoiceSequencing] CHECK CONSTRAINT [FK_InvoiceSequencing_ModifiedByUserId]
+;
+
+
+INSERT INTO [payment].[InvoiceSequencing] ([FiscalYear],[FromDate],[ToDate],[SequenceStartNum] ,[SequenceEndNum],[CreatedBy],[ModifiedBy] ,[CreatedDate] ,[ModifiedDate])
+VALUES    (2019,'2019-04-01','2020-03-31',2000000,209999,2,2,GetDate(),GetDate()),
+    (2020,'2020-04-01','2021-03-31',2100000,219999,2,2,GetDate(),GetDate());
+	
+	
+
+CREATE TABLE [payment].[VATDetails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FiscalYear] [int] NOT NULL,
+	[FromDate] [datetime] NOT NULL,
+	[ToDate] [datetime] NOT NULL,
+	[VATPercentage] [decimal](10, 2) NULL,
+	[CreatedBy] [int] NOT NULL,
+	[ModifiedBy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+
+ALTER TABLE [payment].[VATDetails]  WITH CHECK ADD  CONSTRAINT [FK_VATDetails_CreatedByUserId] FOREIGN KEY([CreatedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[VATDetails] CHECK CONSTRAINT [FK_VATDetails_CreatedByUserId]
+;
+
+ALTER TABLE [payment].[VATDetails]  WITH CHECK ADD  CONSTRAINT [FK_VATDetails_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [payment].[VATDetails] CHECK CONSTRAINT [FK_VATDetails_ModifiedByUserId]
+;
+
+
+INSERT INTO [payment].[VATDetails]   ([FiscalYear] ,[FromDate] ,[ToDate] ,[VATPercentage],[CreatedBy] ,[ModifiedBy] ,[CreatedDate] ,[ModifiedDate])
+     VALUES  (2019,'2019-04-01','2020-03-31',20,	2,	2,GETDATE(),GETDATE()),
+           (2020,'2020-04-01','2021-03-31',20,	2,	2,GETDATE(),GETDATE());
+
+
+ALTER TABLE [payment].[CreditNote] Add  [CreditNoteRefNumber] [int] NULL;
+		   
+	  ]]>
+	      </sql>
+  </changeSet>
+  
+   <changeSet  author="snavaz" id="006.A">
+    <sql>
+      <![CDATA[
+	  
+
+
+Create table payment.CreditNoteSequencing
+(
+	Id int not null primary key identity(1,1),
+	FiscalYear int not null,
+	FromDate Datetime not null,
+	ToDate Datetime not null,
+	SequenceStartNum int not null,
+	SequenceEndNum int not null,
+	 [CreatedBy] [int] NOT NULL,
+	[ModifiedBy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL
+);
+
+ALTER TABLE payment.CreditNoteSequencing  WITH CHECK ADD  CONSTRAINT [FK_CreditNoteSequencing_CreatedByUserId] FOREIGN KEY([CreatedBy])
+REFERENCES [user].[User] ([Id]);
+
+ALTER TABLE payment.CreditNoteSequencing CHECK CONSTRAINT [FK_CreditNoteSequencing_CreatedByUserId];
+
+
+ALTER TABLE payment.CreditNoteSequencing  WITH CHECK ADD  CONSTRAINT [FK_CreditNoteSequencing_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id]);
+
+ALTER TABLE payment.CreditNoteSequencing CHECK CONSTRAINT [FK_CreditNoteSequencing_ModifiedByUserId];
+
+Insert into payment.CreditNoteSequencing(FiscalYear,FromDate,ToDate,SequenceStartNum,SequenceEndNum,CreatedBy,ModifiedBy,CreatedDate,ModifiedDate)
+values
+(2019, Convert(datetime, '2019-04-01'), Convert(datetime, '2020-03-31'), 3000000, 309999,2,2,GETDATE(),GETDATE()),
+(2020, Convert(datetime, '2020-04-01'), Convert(datetime, '2021-03-31'), 3100000, 319999,2,2,GETDATE(),GETDATE());
+	  
+ 
+  ]]>
+	      </sql>
+  </changeSet>
+   <changeSet  author="aali" id="006.B">
+    <sql>
+      <![CDATA[
+
+DBCC CHECKIDENT ('payment.PaymentType', RESEED, 3000);
+ 
+DELETE FROM payment.PaymentType;
+
+INSERT INTO payment.PaymentType
+		SELECT   'Cash', 1
+        ;
+     
+		INSERT INTO payment.PaymentType
+		SELECT   'Cheque', 0
+        ;
+    INSERT INTO payment.PaymentType
+		SELECT   'CardPayment', 0
+        ;    
+
+    INSERT INTO payment.PaymentType
+		SELECT   'BankTransfer', 0
+        ;    
+        INSERT INTO payment.PaymentType
+		SELECT   'None', 0
+        ; 
+	  
+  ]]>
+	      </sql>
+  </changeSet>
+
+
+</databaseChangeLog>

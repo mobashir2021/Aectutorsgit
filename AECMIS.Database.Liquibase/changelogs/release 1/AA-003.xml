@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+    <changeSet author="aali" id="003.A">
+        <sql>
+      <![CDATA[
+
+INSERT INTO [user].Roles
+(RoleName)
+VALUES
+('Admin')
+      
+    
+      ]]>
+    </sql>
+    
+  </changeSet>
+
+    <changeSet author="aali" id="003.B">
+        <sql>
+      <![CDATA[
+      
+  ALTER TABLE contact.Contact
+ALTER COLUMN Email varchar(40) null
+       ]]>
+</sql>
+    </changeSet>
+
+    <changeSet author="aali" id="003.C">
+        <sql>
+      <![CDATA[
+      
+        create table [contact].[TitleType] (
+       Id  int IDENTITY(4001,1) NOT NULL,
+       [Description] varchar(15) not null,       
+       
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+
+ALTER TABLE contact.ContactPerson
+ADD Title int null
+;
+
+ALTER TABLE [contact].[ContactPerson]
+ADD CONSTRAINT [FK_Person_TitleID] FOREIGN KEY([Title])
+REFERENCES [contact].[TitleType] ([Id])
+;
+
+INSERT INTO contact.TitleType
+SELECT 'Mr'
+UNION ALL
+SELECT 'Mrs'
+UNION ALL
+SELECT 'Miss'
+;
+
+UPDATE contact.ContactPerson SET Title = 4001
+;
+
+ALTER  TABLE contact.ContactPerson
+ALTER COLUMN Title int not null
+;
+
+  ]]>
+</sql>
+</changeSet>
+
+    <changeSet author="aali" id="003.D">
+        <sql>
+      <![CDATA[
+       ALTER TABLE [student].Student
+  ADD  StudentImage varchar(500) NULL
+  
+       
+      ]]>
+  </sql>
+    </changeSet>
+    <changeSet author="aali" id="003.E">
+        <sql>
+            <![CDATA[
+       ALTER TABLE [student].Student
+  ADD  ImageType varchar(100) NULL
+  
+       
+      ]]>
+        </sql>
+    </changeSet>
+    <changeSet author="aali" id="003.F">
+        <sql>
+            <![CDATA[
+       DECLARE @NewPriceList TABLE
+(
+ TotalSessions int
+ ,Amount  money 
+)
+
+DECLARE @NewPriceListSenior TABLE
+(
+ TotalSessions int
+ ,Amount  money 
+)
+
+
+INSERT INTO @NewPriceList
+SELECT 1, 27.00
+UNION ALL
+SELECT 2, 54.00
+UNION ALL
+SELECT 3, 81.00
+UNION ALL
+SELECT 4, 108.00
+UNION ALL
+SELECT 5, 135.00
+UNION ALL
+SELECT 6, 162.00
+UNION ALL
+SELECT 12, 324.00
+
+
+
+INSERT INTO @NewPriceListSenior
+SELECT 1, 30.00
+UNION ALL
+SELECT 2, 60.00
+UNION ALL
+SELECT 3, 90.00
+UNION ALL
+SELECT 4, 120.00
+UNION ALL
+SELECT 5, 150.00
+UNION ALL
+SELECT 6, 180.00
+UNION ALL
+SELECT 12, 360.00
+
+
+UPDATE pp SET pp.Amount = np.Amount FROM payment.PaymentPlan pp
+JOIN @NewPriceList np on np.TotalSessions = pp.TotalSessions
+where pp.Curriculum NOT in (6007
+,6008) 
+
+INSERT INTO payment.PaymentPlan
+SELECT 6001, 135.00, 5, 0
+UNION ALL
+SELECT 6002, 135.00, 5, 0
+UNION ALL
+SELECT 6003, 135.00, 5, 0
+UNION ALL
+SELECT 6004, 135.00, 5, 0
+UNION ALL
+SELECT 6005, 135.00, 5, 0
+UNION ALL
+SELECT 6006 , 135.00, 5, 0
+UNION ALL
+SELECT 6007, 150.00, 5, 0
+UNION ALL
+SELECT 6008 , 150.00, 5, 0
+
+
+UPDATE pp SET pp.Amount = np.Amount FROM payment.PaymentPlan pp
+JOIN @NewPriceListSenior np on np.TotalSessions = pp.TotalSessions
+where pp.Curriculum  in (6007
+,6008) 
+  
+       
+      ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

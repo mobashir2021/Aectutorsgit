@@ -1,0 +1,122 @@
+﻿@using AECMIS.MVC.Binders
+@model AECMIS.DAL.Domain.DTO.SessionRegisterViewModel
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "CreateNewInvoice";
+}
+@using (Html.BeginForm("SaveNewPaymentInvoice", "Payment", FormMethod.Post, new { @id = "___mainForm" }))
+{
+    @Html.ValidationSummary(false)
+
+    <h2>Create New Invoice</h2>
+
+
+    <div class="table-responsive">
+        <table class="table table-condensed" data-bind="visible: $root.ShowBlock">
+            <thead>
+                <tr>
+                    <td>Student No.</td>
+                    <td>Name</td>
+
+                    <td>PaymentType</td>
+                    <td>Payment</td>
+                    <td>Payment Date</td>
+                    <td>Discount</td>
+                    <td>VAT Amount</td>
+                    <td>Cheque No.</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-bind="text: StudentNo"></td>
+                    <td data-bind="text: FirstName"></td>
+
+                    <td>
+                        @*<div data-bind="if: $root.IsPaymentRequired">*@
+                            <select id="newinvoicepaymentTypeinvalidate" name="paymentType" data-bind="options:$root.lstPaymentTypeMain, optionsCaption:'--Select--',optionsText:'PaymentTypeDesc',optionsValue:'PaymentTypeId', value: $root.PaymentTypeSelectedMain"></select>
+                        @*</div>*@
+                    </td>
+                    <td>
+                        @*<div data-bind="if:$root.IsPaymentRequired">*@
+                            <select id="newinvoicepaymentplaninvalidate" name="paymentPlan" data-bind="options:$root.lstPaymentPlanMain,optionsCaption:'--Select--', optionsText:'PaymentPlanValue',optionsValue:'PaymentPlanId', value: $root.PaymentPlanSelectedMain"></select>
+                        @*</div>*@
+
+                    </td>
+                    <td>
+                        @*<div data-bind="if:$root.IsPaymentRequired">*@
+                            <input class="date paymentDateInput" readonly="readonly" autocomplete="off" type="text" name="PaymentDate" data-bind="value: $root.PaymentDateMain" />
+                            @*<input class="date paymentDateInput" name="paymentDate" type="text" data-bind="datepicker:$data.SessionAttendanceViewModel().FutureInvoicePayment.PaymentDate, datepickerOptions:{ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: false, yearRange:'2000:2016'}, uniqueName: true" />*@
+                        @*</div>*@
+                    </td>
+                    <td>
+                        <div>
+                            <input class="paymentDateInput" type="text" data-bind="value : $root.DataDiscount" />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input class="paymentDateInput" type="text" data-bind="value : $root.VATAmountBreakdown" />
+                        </div>
+                    </td>
+                    <td>
+                        <div data-bind="if:$root.PaymentTypeSelectedMain() == 3002">
+                            <input type="text" id="newinvoicechequeNo" name="chequeNo" data-bind="value: $root.ChequeNoMain"
+                                   maxlength="6" class="chequeInput" />
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button class="btn btn-default" type="button" data-bind="click:OpenSearchDialog, disable: $root.RegisterDetailsAreReadOnly"><span class="glyphicon glyphicon-plus"></span> Add Students</button>
+        <button class="btn btn-default" type="button" data-bind="click:Save,disable:!ShowBlock"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+
+    </div>
+
+    <!-- Modal -->
+    @Html.Partial("StudentSearchPartial")
+
+    <!--Modal -->
+    @Html.Partial("_NewInvoiceSaveResult")
+
+    <!--Modal -->
+    @Html.Partial("_captureAdminPassword")
+
+    <!--Modal-->
+    @Html.Partial("_ConfirmPartial")
+}
+<script src="@Url.Content("~/js/UIDialog.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/pagerViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/studentSearchNewInvoiceViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/createNewInvoiceViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/ajaxoverlay.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/adminPassword.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/confirmation.js")" type="text/javascript"></script>
+
+<script src="~/js/KODatePicker.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var viewModel = new createNewInvoiceViewModel(@Html.Raw(@Model.SerializeObject()));
+
+        viewModel.curriculumTypes = ko.mapping.fromJS(@Html.Raw(JsonConvert.SerializeObject(ViewData["CurriculumTypes"])));
+        viewModel.paymentTypes = @Html.Raw(ViewData["PaymentTypes"].SerializeObject());
+
+
+        ko.validation.init({
+            insertMessages: false,
+            decorateInputElement: true,
+            errorElementClass: "input-validation-error",
+            errorClass:"input-validation-error",
+            messagesOnModified: false,
+            decorateElementOnModified:false,
+            registerExtenders: true,
+            grouping : { deep: false, observable: false}
+        });
+
+
+        ko.applyBindings(viewModel, $("#___mainForm")[0]);
+    });
+</script>

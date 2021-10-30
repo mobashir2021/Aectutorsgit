@@ -1,0 +1,958 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+    <changeSet author="aali" id="004.A">
+        <sql>
+            <![CDATA[
+
+ALTER TABLE [timetable].[TuitionCentre] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[TuitionCentre] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[TuitionCentre] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[TuitionCentre]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[TuitionCentre] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+ ALTER TABLE[timetable].[TuitionCentre]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[TuitionCentre]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[TuitionCentre] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[TuitionCentre]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[TuitionCentre] WITH CHECK ADD  CONSTRAINT [FK_TuitionCentre_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[TuitionCentre] CHECK CONSTRAINT [FK_TuitionCentre_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[TuitionCentre] WITH CHECK ADD  CONSTRAINT [FK_TuitionCentre_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[TuitionCentre] CHECK CONSTRAINT [FK_TuitionCentre_CreatedByUserId]
+  ;
+ALTER TABLE [student].[StudentSubjects] ADD CreatedBy int 
+; 
+ ALTER TABLE[student].[StudentSubjects] ADD ModifiedBy int
+ ;
+ALTER TABLE[student].[StudentSubjects] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [student].[StudentSubjects]ADD ModifiedDate DateTime 
+ ;
+ 
+ INSERT INTO [user].[User]
+SELECT 'DBUser', 'test12345' 
+;
+
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[student].[StudentSubjects] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[student].[StudentSubjects]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[student].[StudentSubjects]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[student].[StudentSubjects] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[StudentSubjects]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[StudentSubjects] WITH CHECK ADD  CONSTRAINT [FK_StudentSubjects_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[student].[StudentSubjects] CHECK CONSTRAINT [FK_StudentSubjects_ModifiedByUserId] 
+ ;
+  ALTER TABLE[student].[StudentSubjects] WITH CHECK ADD  CONSTRAINT [FK_StudentSubjects_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[student].[StudentSubjects] CHECK CONSTRAINT [FK_StudentSubjects_CreatedByUserId]
+  ;
+ALTER TABLE [contact].[ContactPerson] ADD CreatedBy int 
+; 
+ ALTER TABLE[contact].[ContactPerson] ADD ModifiedBy int
+ ;
+ALTER TABLE[contact].[ContactPerson] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [contact].[ContactPerson]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[contact].[ContactPerson] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[contact].[ContactPerson]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[contact].[ContactPerson]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[contact].[ContactPerson] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[contact].[ContactPerson]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[contact].[ContactPerson] WITH CHECK ADD  CONSTRAINT [FK_ContactPerson_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[contact].[ContactPerson] CHECK CONSTRAINT [FK_ContactPerson_ModifiedByUserId] 
+ ;
+  ALTER TABLE[contact].[ContactPerson] WITH CHECK ADD  CONSTRAINT [FK_ContactPerson_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[contact].[ContactPerson] CHECK CONSTRAINT [FK_ContactPerson_CreatedByUserId]
+  ;
+ALTER TABLE [payment].[InvoiceStatus] ADD CreatedBy int 
+; 
+ ALTER TABLE[payment].[InvoiceStatus] ADD ModifiedBy int
+ ;
+ALTER TABLE[payment].[InvoiceStatus] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [payment].[InvoiceStatus]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[payment].[InvoiceStatus] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[payment].[InvoiceStatus]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[payment].[InvoiceStatus]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoiceStatus] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoiceStatus]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoiceStatus] WITH CHECK ADD  CONSTRAINT [FK_InvoiceStatus_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[payment].[InvoiceStatus] CHECK CONSTRAINT [FK_InvoiceStatus_ModifiedByUserId] 
+ ;
+  ALTER TABLE[payment].[InvoiceStatus] WITH CHECK ADD  CONSTRAINT [FK_InvoiceStatus_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[payment].[InvoiceStatus] CHECK CONSTRAINT [FK_InvoiceStatus_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[SessionAttendanceStatus] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[SessionAttendanceStatus] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[SessionAttendanceStatus] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[SessionAttendanceStatus]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[SessionAttendanceStatus] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[SessionAttendanceStatus]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[SessionAttendanceStatus]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionAttendanceStatus] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionAttendanceStatus]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionAttendanceStatus] WITH CHECK ADD  CONSTRAINT [FK_SessionAttendanceStatus_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[SessionAttendanceStatus] CHECK CONSTRAINT [FK_SessionAttendanceStatus_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[SessionAttendanceStatus] WITH CHECK ADD  CONSTRAINT [FK_SessionAttendanceStatus_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[SessionAttendanceStatus] CHECK CONSTRAINT [FK_SessionAttendanceStatus_CreatedByUserId]
+  ;
+ALTER TABLE [student].[Qualification] ADD CreatedBy int 
+; 
+ ALTER TABLE[student].[Qualification] ADD ModifiedBy int
+ ;
+ALTER TABLE[student].[Qualification] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [student].[Qualification]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[student].[Qualification] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[student].[Qualification]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[student].[Qualification]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[student].[Qualification] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[Qualification]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[Qualification] WITH CHECK ADD  CONSTRAINT [FK_Qualification_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[student].[Qualification] CHECK CONSTRAINT [FK_Qualification_ModifiedByUserId] 
+ ;
+  ALTER TABLE[student].[Qualification] WITH CHECK ADD  CONSTRAINT [FK_Qualification_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[student].[Qualification] CHECK CONSTRAINT [FK_Qualification_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[DaysOfWeek] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[DaysOfWeek] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[DaysOfWeek] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[DaysOfWeek]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[DaysOfWeek] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[DaysOfWeek]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[DaysOfWeek]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[DaysOfWeek] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[DaysOfWeek]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[DaysOfWeek] WITH CHECK ADD  CONSTRAINT [FK_DaysOfWeek_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[DaysOfWeek] CHECK CONSTRAINT [FK_DaysOfWeek_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[DaysOfWeek] WITH CHECK ADD  CONSTRAINT [FK_DaysOfWeek_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[DaysOfWeek] CHECK CONSTRAINT [FK_DaysOfWeek_CreatedByUserId]
+  ;
+ALTER TABLE [user].[Roles] ADD CreatedBy int 
+; 
+ ALTER TABLE[user].[Roles] ADD ModifiedBy int
+ ;
+ALTER TABLE[user].[Roles] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [user].[Roles]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[user].[Roles] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[user].[Roles]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[user].[Roles]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[user].[Roles] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[user].[Roles]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[user].[Roles] WITH CHECK ADD  CONSTRAINT [FK_Roles_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[user].[Roles] CHECK CONSTRAINT [FK_Roles_ModifiedByUserId] 
+ ;
+  ALTER TABLE[user].[Roles] WITH CHECK ADD  CONSTRAINT [FK_Roles_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[user].[Roles] CHECK CONSTRAINT [FK_Roles_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[Curriculum] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[Curriculum] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[Curriculum] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[Curriculum]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[Curriculum] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[Curriculum]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[Curriculum]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Curriculum] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Curriculum]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Curriculum] WITH CHECK ADD  CONSTRAINT [FK_Curriculum_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[Curriculum] CHECK CONSTRAINT [FK_Curriculum_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[Curriculum] WITH CHECK ADD  CONSTRAINT [FK_Curriculum_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[Curriculum] CHECK CONSTRAINT [FK_Curriculum_CreatedByUserId]
+  ;
+ALTER TABLE [user].[User] ADD CreatedBy int 
+; 
+ ALTER TABLE[user].[User] ADD ModifiedBy int
+ ;
+ALTER TABLE[user].[User] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [user].[User]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[user].[User] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[user].[User]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[user].[User]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[user].[User] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[user].[User]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[user].[User] WITH CHECK ADD  CONSTRAINT [FK_User_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[user].[User] CHECK CONSTRAINT [FK_User_ModifiedByUserId] 
+ ;
+  ALTER TABLE[user].[User] WITH CHECK ADD  CONSTRAINT [FK_User_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[user].[User] CHECK CONSTRAINT [FK_User_CreatedByUserId]
+  ;
+ALTER TABLE [user].[UserRoles] ADD CreatedBy int 
+; 
+ ALTER TABLE[user].[UserRoles] ADD ModifiedBy int
+ ;
+ALTER TABLE[user].[UserRoles] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [user].[UserRoles]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[user].[UserRoles] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[user].[UserRoles]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[user].[UserRoles]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[user].[UserRoles] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[user].[UserRoles]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[user].[UserRoles] WITH CHECK ADD  CONSTRAINT [FK_UserRoles_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[user].[UserRoles] CHECK CONSTRAINT [FK_UserRoles_ModifiedByUserId] 
+ ;
+  ALTER TABLE[user].[UserRoles] WITH CHECK ADD  CONSTRAINT [FK_UserRoles_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[user].[UserRoles] CHECK CONSTRAINT [FK_UserRoles_CreatedByUserId]
+  ;
+ALTER TABLE [teacher].[TeacherAttendance] ADD CreatedBy int 
+; 
+ ALTER TABLE[teacher].[TeacherAttendance] ADD ModifiedBy int
+ ;
+ALTER TABLE[teacher].[TeacherAttendance] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [teacher].[TeacherAttendance]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[teacher].[TeacherAttendance] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[teacher].[TeacherAttendance]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[teacher].[TeacherAttendance]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[teacher].[TeacherAttendance] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[teacher].[TeacherAttendance]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[teacher].[TeacherAttendance] WITH CHECK ADD  CONSTRAINT [FK_TeacherAttendance_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[teacher].[TeacherAttendance] CHECK CONSTRAINT [FK_TeacherAttendance_ModifiedByUserId] 
+ ;
+  ALTER TABLE[teacher].[TeacherAttendance] WITH CHECK ADD  CONSTRAINT [FK_TeacherAttendance_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[teacher].[TeacherAttendance] CHECK CONSTRAINT [FK_TeacherAttendance_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[Subject] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[Subject] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[Subject] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[Subject]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[Subject] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[Subject]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[Subject]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Subject] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Subject]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Subject] WITH CHECK ADD  CONSTRAINT [FK_Subject_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[Subject] CHECK CONSTRAINT [FK_Subject_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[Subject] WITH CHECK ADD  CONSTRAINT [FK_Subject_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[Subject] CHECK CONSTRAINT [FK_Subject_CreatedByUserId]
+  ;
+ALTER TABLE [payment].[PaymentPlan] ADD CreatedBy int 
+; 
+ ALTER TABLE[payment].[PaymentPlan] ADD ModifiedBy int
+ ;
+ALTER TABLE[payment].[PaymentPlan] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [payment].[PaymentPlan]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[payment].[PaymentPlan] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[payment].[PaymentPlan]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[payment].[PaymentPlan]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[payment].[PaymentPlan] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[PaymentPlan]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[PaymentPlan] WITH CHECK ADD  CONSTRAINT [FK_PaymentPlan_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[payment].[PaymentPlan] CHECK CONSTRAINT [FK_PaymentPlan_ModifiedByUserId] 
+ ;
+  ALTER TABLE[payment].[PaymentPlan] WITH CHECK ADD  CONSTRAINT [FK_PaymentPlan_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[payment].[PaymentPlan] CHECK CONSTRAINT [FK_PaymentPlan_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[Session] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[Session] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[Session] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[Session]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[Session] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[Session]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[Session]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Session] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Session]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[Session] WITH CHECK ADD  CONSTRAINT [FK_Session_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[Session] CHECK CONSTRAINT [FK_Session_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[Session] WITH CHECK ADD  CONSTRAINT [FK_Session_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[Session] CHECK CONSTRAINT [FK_Session_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[SubjectsTaughtAtSession] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[SubjectsTaughtAtSession] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[SubjectsTaughtAtSession] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[SubjectsTaughtAtSession]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[SubjectsTaughtAtSession] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[SubjectsTaughtAtSession]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[SubjectsTaughtAtSession]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SubjectsTaughtAtSession] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SubjectsTaughtAtSession]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SubjectsTaughtAtSession] WITH CHECK ADD  CONSTRAINT [FK_SubjectsTaughtAtSession_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[SubjectsTaughtAtSession] CHECK CONSTRAINT [FK_SubjectsTaughtAtSession_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[SubjectsTaughtAtSession] WITH CHECK ADD  CONSTRAINT [FK_SubjectsTaughtAtSession_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[SubjectsTaughtAtSession] CHECK CONSTRAINT [FK_SubjectsTaughtAtSession_CreatedByUserId]
+  ;
+ALTER TABLE [teacher].[Teacher] ADD CreatedBy int 
+; 
+ ALTER TABLE[teacher].[Teacher] ADD ModifiedBy int
+ ;
+ALTER TABLE[teacher].[Teacher] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [teacher].[Teacher]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[teacher].[Teacher] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[teacher].[Teacher]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[teacher].[Teacher]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[teacher].[Teacher] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[teacher].[Teacher]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[teacher].[Teacher] WITH CHECK ADD  CONSTRAINT [FK_Teacher_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[teacher].[Teacher] CHECK CONSTRAINT [FK_Teacher_ModifiedByUserId] 
+ ;
+  ALTER TABLE[teacher].[Teacher] WITH CHECK ADD  CONSTRAINT [FK_Teacher_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[teacher].[Teacher] CHECK CONSTRAINT [FK_Teacher_CreatedByUserId]
+  ;
+ALTER TABLE [contact].[Address] ADD CreatedBy int 
+; 
+ ALTER TABLE[contact].[Address] ADD ModifiedBy int
+ ;
+ALTER TABLE[contact].[Address] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [contact].[Address]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[contact].[Address] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[contact].[Address]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[contact].[Address]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[contact].[Address] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[contact].[Address]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[contact].[Address] WITH CHECK ADD  CONSTRAINT [FK_Address_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[contact].[Address] CHECK CONSTRAINT [FK_Address_ModifiedByUserId] 
+ ;
+  ALTER TABLE[contact].[Address] WITH CHECK ADD  CONSTRAINT [FK_Address_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[contact].[Address] CHECK CONSTRAINT [FK_Address_CreatedByUserId]
+  ;
+ALTER TABLE [student].[Student] ADD CreatedBy int 
+; 
+ ALTER TABLE[student].[Student] ADD ModifiedBy int
+ ;
+ALTER TABLE[student].[Student] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [student].[Student]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[student].[Student] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[student].[Student]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[student].[Student]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[student].[Student] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[Student]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[Student] WITH CHECK ADD  CONSTRAINT [FK_Student_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[student].[Student] CHECK CONSTRAINT [FK_Student_ModifiedByUserId] 
+ ;
+  ALTER TABLE[student].[Student] WITH CHECK ADD  CONSTRAINT [FK_Student_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[student].[Student] CHECK CONSTRAINT [FK_Student_CreatedByUserId]
+  ;
+ALTER TABLE [payment].[Invoice] ADD CreatedBy int 
+; 
+ ALTER TABLE[payment].[Invoice] ADD ModifiedBy int
+ ;
+ALTER TABLE[payment].[Invoice] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [payment].[Invoice]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[payment].[Invoice] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[payment].[Invoice]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[payment].[Invoice]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[payment].[Invoice] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[Invoice]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[Invoice] WITH CHECK ADD  CONSTRAINT [FK_Invoice_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[payment].[Invoice] CHECK CONSTRAINT [FK_Invoice_ModifiedByUserId] 
+ ;
+  ALTER TABLE[payment].[Invoice] WITH CHECK ADD  CONSTRAINT [FK_Invoice_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[payment].[Invoice] CHECK CONSTRAINT [FK_Invoice_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[SessionRegisterStatus] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[SessionRegisterStatus] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[SessionRegisterStatus] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[SessionRegisterStatus]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[SessionRegisterStatus] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[SessionRegisterStatus]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[SessionRegisterStatus]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionRegisterStatus] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionRegisterStatus]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionRegisterStatus] WITH CHECK ADD  CONSTRAINT [FK_SessionRegisterStatus_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[SessionRegisterStatus] CHECK CONSTRAINT [FK_SessionRegisterStatus_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[SessionRegisterStatus] WITH CHECK ADD  CONSTRAINT [FK_SessionRegisterStatus_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[SessionRegisterStatus] CHECK CONSTRAINT [FK_SessionRegisterStatus_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[SessionRegister] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[SessionRegister] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[SessionRegister] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[SessionRegister]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[SessionRegister] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[SessionRegister]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[SessionRegister]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionRegister] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionRegister]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionRegister] WITH CHECK ADD  CONSTRAINT [FK_SessionRegister_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[SessionRegister] CHECK CONSTRAINT [FK_SessionRegister_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[SessionRegister] WITH CHECK ADD  CONSTRAINT [FK_SessionRegister_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[SessionRegister] CHECK CONSTRAINT [FK_SessionRegister_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[SessionAttendance] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[SessionAttendance] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[SessionAttendance] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[SessionAttendance]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[SessionAttendance] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[SessionAttendance]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[SessionAttendance]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionAttendance] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionAttendance]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SessionAttendance] WITH CHECK ADD  CONSTRAINT [FK_SessionAttendance_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[SessionAttendance] CHECK CONSTRAINT [FK_SessionAttendance_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[SessionAttendance] WITH CHECK ADD  CONSTRAINT [FK_SessionAttendance_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[SessionAttendance] CHECK CONSTRAINT [FK_SessionAttendance_CreatedByUserId]
+  ;
+ALTER TABLE [timetable].[SubjectAttendance] ADD CreatedBy int 
+; 
+ ALTER TABLE[timetable].[SubjectAttendance] ADD ModifiedBy int
+ ;
+ALTER TABLE[timetable].[SubjectAttendance] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [timetable].[SubjectAttendance]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[timetable].[SubjectAttendance] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[timetable].[SubjectAttendance]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[timetable].[SubjectAttendance]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SubjectAttendance] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SubjectAttendance]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[timetable].[SubjectAttendance] WITH CHECK ADD  CONSTRAINT [FK_SubjectAttendance_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[timetable].[SubjectAttendance] CHECK CONSTRAINT [FK_SubjectAttendance_ModifiedByUserId] 
+ ;
+  ALTER TABLE[timetable].[SubjectAttendance] WITH CHECK ADD  CONSTRAINT [FK_SubjectAttendance_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[timetable].[SubjectAttendance] CHECK CONSTRAINT [FK_SubjectAttendance_CreatedByUserId]
+  ;
+ALTER TABLE [student].[EducationInstitute] ADD CreatedBy int 
+; 
+ ALTER TABLE[student].[EducationInstitute] ADD ModifiedBy int
+ ;
+ALTER TABLE[student].[EducationInstitute] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [student].[EducationInstitute]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[student].[EducationInstitute] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[student].[EducationInstitute]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[student].[EducationInstitute]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[student].[EducationInstitute] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[EducationInstitute]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[student].[EducationInstitute] WITH CHECK ADD  CONSTRAINT [FK_EducationInstitute_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[student].[EducationInstitute] CHECK CONSTRAINT [FK_EducationInstitute_ModifiedByUserId] 
+ ;
+  ALTER TABLE[student].[EducationInstitute] WITH CHECK ADD  CONSTRAINT [FK_EducationInstitute_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[student].[EducationInstitute] CHECK CONSTRAINT [FK_EducationInstitute_CreatedByUserId]
+  ;
+ALTER TABLE [payment].[InvoicePayment] ADD CreatedBy int 
+; 
+ ALTER TABLE[payment].[InvoicePayment] ADD ModifiedBy int
+ ;
+ALTER TABLE[payment].[InvoicePayment] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [payment].[InvoicePayment]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[payment].[InvoicePayment] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[payment].[InvoicePayment]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[payment].[InvoicePayment]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoicePayment] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoicePayment]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoicePayment] WITH CHECK ADD  CONSTRAINT [FK_InvoicePayment_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[payment].[InvoicePayment] CHECK CONSTRAINT [FK_InvoicePayment_ModifiedByUserId] 
+ ;
+  ALTER TABLE[payment].[InvoicePayment] WITH CHECK ADD  CONSTRAINT [FK_InvoicePayment_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[payment].[InvoicePayment] CHECK CONSTRAINT [FK_InvoicePayment_CreatedByUserId]
+  ;
+ALTER TABLE [payment].[InvoiceReciept] ADD CreatedBy int 
+; 
+ ALTER TABLE[payment].[InvoiceReciept] ADD ModifiedBy int
+ ;
+ALTER TABLE[payment].[InvoiceReciept] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [payment].[InvoiceReciept]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[payment].[InvoiceReciept] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[payment].[InvoiceReciept]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[payment].[InvoiceReciept]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoiceReciept] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoiceReciept]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[payment].[InvoiceReciept] WITH CHECK ADD  CONSTRAINT [FK_InvoiceReciept_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[payment].[InvoiceReciept] CHECK CONSTRAINT [FK_InvoiceReciept_ModifiedByUserId] 
+ ;
+  ALTER TABLE[payment].[InvoiceReciept] WITH CHECK ADD  CONSTRAINT [FK_InvoiceReciept_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[payment].[InvoiceReciept] CHECK CONSTRAINT [FK_InvoiceReciept_CreatedByUserId]
+  ;
+ALTER TABLE [contact].[Contact] ADD CreatedBy int 
+; 
+ ALTER TABLE[contact].[Contact] ADD ModifiedBy int
+ ;
+ALTER TABLE[contact].[Contact] ADD CreatedDate DateTime 
+;
+  ALTER TABLE [contact].[Contact]ADD ModifiedDate DateTime 
+ ;
+ Declare @UserId int 
+SELECT @UserId =  Id FROM [user].[User] UPDATE[contact].[Contact] SET ModifiedBy = @UserId, ModifiedDate = GetDate(), CreatedBy = @UserId, CreatedDate =GetDate() 
+ ;
+
+   ALTER TABLE[contact].[Contact]ALTER COLUMN CreatedBy int NOT NULL 
+ ; 
+  ALTER TABLE[contact].[Contact]
+ALTER COLUMN ModifiedBy int NOT NULL 
+ ; 
+ ALTER TABLE[contact].[Contact] ALTER COLUMN CreatedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[contact].[Contact]ALTER COLUMN ModifiedDate DateTime NOT NULL 
+ ; 
+ ALTER TABLE[contact].[Contact] WITH CHECK ADD  CONSTRAINT [FK_Contact_ModifiedByUserId] FOREIGN KEY([ModifiedBy])
+REFERENCES [user].[User] ([Id])
+
+ ;
+  ALTER TABLE[contact].[Contact] CHECK CONSTRAINT [FK_Contact_ModifiedByUserId] 
+ ;
+  ALTER TABLE[contact].[Contact] WITH CHECK ADD  CONSTRAINT [FK_Contact_CreatedByUserId] FOREIGN KEY([CreatedBy]) REFERENCES [user].[User] ([Id])  
+ ; 
+ ALTER TABLE[contact].[Contact] CHECK CONSTRAINT [FK_Contact_CreatedByUserId]
+  ;
+      ]]>
+        </sql>
+
+    </changeSet>
+
+    <changeSet author="aali" id="004.B">
+        <sql>
+            <![CDATA[
+      ALTER TABLE student.Qualification
+ALTER COLUMN [Subject] varchar(50)
+
+
+ALTER TABLE student.Student
+ALTER COLUMN [Nationality] varchar(40)
+      
+      ]]>
+        </sql>
+    </changeSet>
+    <changeSet author="aali" id="004.C">
+        <sql>
+            <![CDATA[
+            ALTER TABLE payment.InvoicePayment
+            ALTER COLUMN PaymentDate date NULL
+      
+      ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet author="aali" id="004.D">
+        <sql>
+            <![CDATA[
+            ALTER TABLE timetable.SubjectAttendance
+            ALTER COLUMN TeacherId int NULL
+      
+      ]]>
+        </sql>
+    </changeSet>
+    <changeSet author="aali" id="004.E">
+        <sql>
+            <![CDATA[
+          
+          declare @UserId int
+
+SELECT TOP 1 @UserId = Id from [user].[user]
+
+
+INSERT timetable.TuitionCentre
+SELECT '01','', @UserId,@UserId, GetDate(), GetDate()
+UNION ALL
+SELECT '02','', @UserId,@UserId, GetDate(), GetDate()
+
+
+DELETE FROM teacher.Teacher
+where FirstName in ('Haider'
+,'Yasmin'
+,'Shaira')
+
+
+INSERT INTO teacher.Teacher
+SELECT 'Yaseen', '',null,null, @UserId,  @UserId,GETDATE(), GETDATE()
+UNION ALL
+SELECT 'Rafi', '',null,null, @UserId,  @UserId,GETDATE(), GETDATE()
+UNION ALL
+SELECT 'Sofia', '',null,null, @UserId,  @UserId,GETDATE(), GETDATE()
+
+      ]]>
+        </sql>
+    </changeSet>
+  <changeSet author="aali" id="004.F">
+    <sql>
+      <![CDATA[
+           UPDATE [timetable].[DaysOfWeek]
+  SET ModifiedDate = GETDATE() where Description = 'Sunday'
+      ]]>
+    </sql>
+  </changeSet>
+</databaseChangeLog>

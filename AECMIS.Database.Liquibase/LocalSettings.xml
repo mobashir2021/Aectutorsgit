@@ -1,0 +1,7 @@
+<LocalParameters>
+	<Parameter key="Db.Name" value="hub_stream_three" />
+	<Parameter key="CLR.Library.Path" value="D:\MIC\hub_echosign_2012_12_04\Hub.Database.CLR\bin\Debug\Hub.Database.CLR.dll" />
+	
+	<Parameter key="ContentGeneratorTemplatesPath" value="\\FP-PC224\Hub.Content.Templates" />	
+	<Parameter key="ContentGeneratorViewModelsPath" value="\\FP-PC224\Hub.Content.ViewModelLibraries" />	
+</LocalParameters>

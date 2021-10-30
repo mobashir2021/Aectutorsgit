@@ -1,0 +1,106 @@
+﻿<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="addStudenttoRegister" aria-hidden="true" 
+    data-bind="dialog:IsSearchDialogOpen">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="addStudenttoRegister">Search and Select Student(s)</h4>
+      </div>
+      <div class="modal-body">
+
+
+    <h2>Search Student</h2>
+    <input type="hidden" data-bind="value: StudentSearchViewModel.SearchCriteria.PageSize"/>
+<div id="divMain" class="table-responsive">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input class="form-control" type="text" id="firstName" data-bind="value: StudentSearchViewModel.SearchCriteria.FirstName" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                     <label for="lastName">Last Name</label>
+                     <input class="form-control" type="text" id="lastName" data-bind="value: StudentSearchViewModel.SearchCriteria.LastName" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="studentNo">Student No.</label>
+                    <input class="form-control" type="text" id="studentNo" data-bind="value: StudentSearchViewModel.SearchCriteria.StudentNo" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="curriculum">Curriculum</label>
+                    <select class="form-control" id="curriculum" name="curriculum" data-bind="options: curriculumTypes, optionsCaption: '--select--', optionsText: 'Text', optionsValue: 'Value', value: StudentSearchViewModel.SearchCriteria.Curriculum">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <input type="button" class="btn btn-default" value="Add Student" data-bind="realVisible: StudentSearchViewModel.CanAddNewStudent, click: StudentSearchViewModel.AddStudent" />
+                <input type="button" class="btn btn-default" value="Select Student(s)" data-bind="click: StudentSearchViewModel.ActionOnSelectedStudents"/>
+                <input type="button" class="btn btn-default" value="Search" data-bind="click: StudentSearchViewModel.SearchStudents" />
+            </div>
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <label class="invisible">Active Only
+                        <input type="checkbox" data-bind="checked: StudentSearchViewModel.SearchCriteria.ActiveOnly" />
+                    </label>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="table-responsive" data-bind="if: StudentSearchViewModel.Students().length > 0">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Student No.</td>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Curriculum</td>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: StudentSearchViewModel.Students">
+                <tr>
+                    <td data-bind="realVisible: $root.StudentSearchViewModel.AreStudentsSelectable">
+                        <input type="checkbox" data-bind="value: StudentId, checked: $root.StudentSearchViewModel.SelectedStudents"/>
+                    </td>
+                    <td data-bind="text: StudentNo"></td>
+                    <td data-bind="text: FirstName"></td>
+                    <td data-bind="text: LastName"></td>
+                    <td data-bind="text: Curriculum"></td>
+                    <td>
+                        <button type="button" class="btn btn-default" data-bind="realVisible: IsEditable, click: $root.edit">Edit</button>                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" data-bind="if: StudentSearchViewModel.Students().length > 0" id="pagerContainer">
+        <ul class="pagination pagination-sm">
+            <li data-bind="css: { disabled: $root.StudentSearchViewModel.Pager().PageIndex === 0 }">
+                <a href="#" data-bind="click: $root.StudentSearchViewModel.Pager().previousPage"><span>&laquo;</span></a>
+            </li>
+            <li data-bind="foreach: $root.StudentSearchViewModel.Pager().allPages, css: { active: $data.pageNumber === ($root.StudentSearchViewModel.Pager().PageIndex() + 1) }">
+                <a href="#" data-bind="text: $data.pageNumber, click: function () { $root.StudentSearchViewModel.Pager().moveToPage($data.pageNumber - 1); }"></a>
+            </li>
+            <li data-bind="css: { disabled: $root.StudentSearchViewModel.Pager().PageIndex === $root.StudentSearchViewModel.Pager().MaxPageIndex }">
+                <a href="#" data-bind="    click: $root.StudentSearchViewModel.Pager().nextPage"><span>&raquo;</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

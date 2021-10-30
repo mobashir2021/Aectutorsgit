@@ -1,0 +1,429 @@
+﻿@using AECMIS.MVC.Binders
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "View Attendances";
+
+}
+@model AECMIS.DAL.Domain.DTO.SearchAttendanceResult
+
+<div id="___mainForm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Student No.</label>
+                    <input class="form-control" type="text" data-bind="value:SearchCriteria.StudentNo, executeOnEnter:SearchAttendances" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input class="form-control" type="text" data-bind="value:SearchCriteria.FirstName, executeOnEnter:SearchAttendances" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input class="form-control" type="text" data-bind="value:SearchCriteria.LastName, executeOnEnter:SearchAttendances" />
+                </div>
+            </div>
+        </div>
+        <div class="row form-horizontal">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-4 control-label">DOB</label>
+                    <div class="col-sm-10 col-md-8">
+                        <input class="form-control date" type="text" data-bind="value:SearchCriteria.DOB, executeOnEnter:SearchAttendances" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-4 control-label">Curriculum</label>
+                    <div class="col-sm-10 col-md-8">
+                        <select class="form-control" id="curriculum" name="curriculum" data-bind="options: $root.CurriculumTypes,optionsCaption:'--select--', optionsText:'Text',optionsValue:'Value', value:SearchCriteria.Curriculum, executeOnEnter:SearchAttendances"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-4 control-label">Subject</label>
+                    <div class="col-sm-10 col-md-8">
+                        <select class="form-control" id="subject" name="subject" data-bind="options: $root.Subjects,optionsCaption:'--select--', optionsText:'Name',optionsValue:'Id', value:SearchCriteria.Subject, executeOnEnter:SearchAttendances"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-horizontal">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-4 control-label">Attendances From</label>
+                    <div class="col-sm-10 col-md-8">
+                        <input class="form-control date" type="text" data-bind="value:SearchCriteria.SessionsFromDate, executeOnEnter:SearchAttendances" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-4 control-label">Attendances To</label>
+                    <div class="col-sm-10 col-md-8">
+                        <input class="form-control date" type="text" data-bind="value:SearchCriteria.SessionsToDate, executeOnEnter:SearchAttendances" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input class="btn btn-default" type="button" value="Search" data-bind="click:SearchAttendances" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover" data-bind="if:Attendances().length >0">
+            <thead>
+                <tr>
+                    <td>Student No.</td>
+                    <td>Student Name</td>
+                    <td>Session</td>
+                    <td>Date</td>
+                    <td>Status</td>
+                    <td>Teacher</td>
+                    <td>Remaining Credits</td>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach:Attendances">
+                <tr>
+                    <td data-bind="text:StudentNo"></td>
+                    <td data-bind="text: StudentName"></td>
+                    <td data-bind="text: Session"></td>
+                    <td data-bind="text: Date"></td>
+                    <td data-bind="text:Status"></td>
+                    <td data-bind="text: Teacher"></td>
+                    <td data-bind="text: RemainingCreditInStr"></td>
+                    <td class="buttons">
+                        <a class="btn" data-bind="click: $root.edit, css: { disabled: !IsProcessed }" href="#" title="edit">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                </tr>
+                <!--ko if: $data.PaymentDetails.length > 0-->
+                <tr>
+                    <td></td>
+                    <td>Invoice No</td>
+                    <td>Invoice Type</td>
+                    <td>Payment Type</td>
+                    <td>Payment Amount</td>
+                    <td></td>
+                </tr>
+                <!-- ko foreach:$data.PaymentDetails -->
+                <tr>
+                    <td></td>
+                    <td data-bind="text:InvoiceNo"></td>
+                    <td data-bind="text:InvoiceType"></td>
+                    <td data-bind="text:PaymentType"></td>
+                    <td data-bind="text:PaymentAmount"></td>
+                    <td></td>
+                </tr>
+                <!-- /ko -->
+                <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination" data-bind="if:Attendances().length > 0" id="pagerContainer">
+
+        @Html.Partial("_pager")
+    </div>
+    @Html.Partial("ChangeAttendance")
+    @Html.Partial("InvalidateInvoice")
+    <!-- Modal -->
+    @Html.Partial("NewInvoice")
+    @Html.Partial("_captureAdminPassword")
+    @Html.Partial("_ValidationResult")
+</div>
+
+<script src="@Url.Content("~/js/UIDialog.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/studentAttendancesViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/pagerViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/adminPassword.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    var viewModel = new StudentAttendanceViewModel((@Html.Raw(Model.SerializeObject())),@Html.Raw(ViewData["AllSubjects"].SerializeObject()));
+    viewModel.CurriculumTypes = @Html.Raw(ViewData["CurriculumTypes"].SerializeObject());
+    viewModel.Centers = @Html.Raw(ViewData["Centers"].SerializeObject());
+    viewModel.Sessions = @Html.Raw(ViewData["Sessions"].SerializeObject());
+    viewModel.AttendanceStatuses = @Html.Raw(ViewData["AttendanceStatuses"].SerializeObject());
+    viewModel.paymentTypes = @Html.Raw(ViewData["PaymentTypes"].SerializeObject());
+    viewModel.PaymentPlans = @Html.Raw(ViewData["PaymentPlans"].SerializeObject());
+
+    ko.applyBindings(viewModel, $("#___mainForm")[0]);
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajaxSetup({ cache: false });
+        var valuedata = $('#newinvoicepaymentType').val();
+
+        if (valuedata < 1) {
+            $('#newinvoicepaymentType').removeClass('input-validation-valid');
+            $('#newinvoicepaymentType').addClass('input-validation-error');
+        }
+        $("#frmchangeattendance").submit(function (e) {
+            return false;
+        });
+        $('#newinvoicechequeNo').hide();
+        $(document).on('change', '#newinvoicepaymentType', function () {
+            var optionText = $("#newinvoicepaymentType option:selected").text();
+            if (optionText == 'Cheque')
+                $('#newinvoicechequeNo').show();
+            else
+                $('#newinvoicechequeNo').hide();
+        });
+
+
+
+    });
+
+    $(document).on('change', '#changestatus', function () {
+
+        if ($('#status').val() == 'AuthorizeAbsence' && (($('#changestatus').val() == 1001 || $('#changestatus').val() == 1003) && $('#remainingcredits').val() == 0)) {
+            $("#createnewinvoice").show();
+            $('#savenewinvoiceCA').hide();
+            //$('#savenewinvoice').attr('class', 'disabled');
+        } else {
+            $("#createnewinvoice").hide();
+            $('#savenewinvoiceCA').show();
+            $('#idchargedtovaluenewtest').text("");
+            //$('#savenewinvoice').attr('class', 'enabled');
+        }
+    });
+
+    $(document).on('click', '#savenewinvoiceCA', function (e) {
+        e.preventDefault();
+
+        var sessionattendancevalue = $('#sessionattendanceid').val();
+        var changeStatusvalue = $('#changestatus').val();
+        var dailyinvoicevalue = $('#isdailyinvoicedata').val();
+        var remainingcreditvalue = $('#remainingcredits').val();
+        var invoiceid = $('#invoiceid').val();
+        var statusvalue = $('#status').val();
+
+        if (changeStatusvalue == 1002) {
+            //if daily invoice is generated then invalidate invoice
+            if (dailyinvoicevalue === "true") {
+
+                viewModel.isOpen(false);
+                viewModel.isOpenInvoice(true);
+
+            } else {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        cache: false,
+                        async: false,
+                        url: 'SessionAttendance/ChargebleToNonChargable',
+                        data: {
+                            SessionAttendanceId: sessionattendancevalue
+                        },
+                        success: function (data) {
+                            //$('#changeattendance').modal('hide');
+                            location.reload(true);
+                        }
+
+                    });
+            }
+        } else if ((changeStatusvalue == 1001 && statusvalue == "UnAuthorizedAbsence") || (changeStatusvalue == 1003 && statusvalue == "Attended")) {
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    url: 'SessionAttendance/ChargebleToChargable',
+                    data: {
+                        SessionAttendanceId: sessionattendancevalue,
+                        NewStatus: changeStatusvalue
+                    },
+                    success: function (data) {
+                        //$('#changeattendance').modal('hide');
+                        location.reload(true);
+                    }
+
+                });
+        } else {
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    url: 'SessionAttendance/NonChargebleToChargable',
+                    data: {
+                        SessionAttendanceId: sessionattendancevalue,
+                        NewStatus: changeStatusvalue,
+                        InvoiceId: invoiceid,
+                        StudentNo: $('#studentnonewinvoice').val(),
+                        PaymentType: $('#newinvoicepaymentType').val(),
+                        PaymentPlan: $('#newinvoicepaymentplan').val(),
+                        ChequeNo: $('#newinvoicechequeNo').val(),
+                        PaymentDate: $('#newinvoicepaymentDate').val(),
+                        IsDailyInvoiceData: $('#isdailyinvoicedata').val(),
+                        FutureInvoiceSelect: $('#selectfutureinvoice').val()
+                    },
+                    success: function (data) {
+                        //$('#changeattendance').modal('hide');
+                        location.reload(true);
+                    }
+
+                });
+        }
+
+    });
+
+    $('#invalidateinvoicesave').click(function () {
+        $.ajaxSetup({ cache: false });
+        //if ($('#CreditNotes').val() == "") {
+
+        //} else {
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'SessionAttendance/InvalidateInvoice',
+                data: {
+                    SessionAttendanceId: $('#invalidatesessionattendanceid').val(),
+                    InvoiceId: $('#invalidateinvoiceid').val(),
+                    Notes: $('#CreditNotes').val()
+                },
+                success: function (data) {
+                    //$('#invalidateinvoice').modal('hide');
+                    //$('#changeattendance').modal('hide');
+                    location.reload(true);
+                }
+
+            });
+        //}
+    });
+
+    $('#createnewinvoice').click(function () {
+        $('#studentnonewinvoice').val($('#studentno').val());
+        $('#newinvoicesessionattendanceid').val($('#sessionattendanceid').val());
+        $('#dialognewinvoice').modal('show');
+    });
+
+    $('#newinvoicecloseid').click(function () {
+        $('#studentnonewinvoice').val('');
+        $('#newinvoicesessionattendanceid').val('');
+        $("#newinvoicepaymentType").val('0'); 
+        $("#newinvoicepaymentplan").val('0');
+        $('#newinvoicepaymentDate').val('');
+        $('#newinvoicechequeNo').hide();
+        $('#dialognewinvoice').modal('hide');
+    });
+
+    $('#newinvoicesaveid').click(function () {
+        if (((($('#newinvoicepaymentDate').val() == "" || $('#newinvoicepaymentplan').val() == 0) && $('#newinvoicepaymentType').val() != 3005) && ($('#newinvoicepaymentType').val() > 0 && $('#newinvoicepaymentType').val() != 3005))
+            || ($('#newinvoicepaymentType').val() == 0)
+        ) {
+            $('#IsValidationPaymentDialogOpenId').modal('show');
+        } else {
+            $('#dialognewinvoice').modal('hide');
+            $("#createnewinvoice").hide();
+            $('#divfutureinvoiceshow').hide();
+            $('#divfutureinvoicenotshow').show();
+
+            $('#idchargedtovaluenewtest').text("New Invoice");
+            $('#savenewinvoiceCA').show();
+        }
+    });
+
+    //$('#cancelinvalidateinvoice').click(function () {
+    //    $('#invalidateinvoice').hide();
+    //    //location.reload(true);
+    //});
+
+    $('#newinvoicepaymentDate').on('change', function (e) {
+        
+        ValidateNewInvoiceMethod();
+    });
+
+    $('#newinvoicechequeNo').on('change', function (e) {
+        
+        ValidateNewInvoiceMethod();
+    });
+
+
+
+    $('#newinvoicepaymentType').change(function () {
+        ValidateNewInvoiceMethod();
+        
+        
+    });
+
+    $('#newinvoicepaymentplan').change(function () {
+        ValidateNewInvoiceMethod();
+        
+        
+    });
+
+
+
+    function ValidateNewInvoiceMethod() {
+        var valuedata = $('#newinvoicepaymentType').val();
+        var datevalue = $('#newinvoicepaymentDate').val();
+        var planvalue = $('#newinvoicepaymentplan').val();
+
+        if (valuedata > 0) {
+            $('#newinvoicepaymentType').addClass('input-validation-valid');
+            $('#newinvoicepaymentType').removeClass('input-validation-error');
+        } else {
+            $('#newinvoicepaymentType').removeClass('input-validation-valid');
+            $('#newinvoicepaymentType').addClass('input-validation-error');
+        }
+        
+        if (valuedata > 0 && valuedata != 3005) {
+            $('#newinvoicepaymentDate').removeClass('input-validation-valid');
+            $('#newinvoicepaymentDate').addClass('input-validation-error');
+            $('#newinvoicepaymentplan').removeClass('input-validation-valid');
+            $('#newinvoicepaymentplan').addClass('input-validation-error');
+        }
+        if (valuedata > 0 && valuedata == 3002 && $('#newinvoicechequeNo').val().length < 1) {
+            $('#newinvoicechequeNo').removeClass('input-validation-valid');
+            $('#newinvoicechequeNo').addClass('input-validation-error');
+        }
+
+        if (valuedata > 0 && valuedata == 3002 && planvalue > 0 && $('#newinvoicechequeNo').val().length > 0 && datevalue !== "") {
+            //self.IsCreateNewInvoiceInInvalidateEnabled(true);
+            $('#newinvoicesaveid').prop('disabled', false);
+            $('#newinvoicepaymentDate').removeClass('input-validation-error');
+            $('#newinvoicepaymentDate').addClass('input-validation-valid');
+            $('#newinvoicechequeNo').addClass('input-validation-valid');
+            $('#newinvoicechequeNo').removeClass('input-validation-error');
+            $('#newinvoicepaymentplan').addClass('input-validation-valid');
+            $('#newinvoicepaymentplan').removeClass('input-validation-error');
+        } else if (valuedata > 0 && valuedata == 3005) {
+            $('#newinvoicepaymentDate').removeClass('input-validation-error');
+            $('#newinvoicepaymentDate').addClass('input-validation-valid');
+            $('#newinvoicechequeNo').addClass('input-validation-valid');
+            $('#newinvoicechequeNo').removeClass('input-validation-error');
+            $('#newinvoicepaymentplan').addClass('input-validation-valid');
+            $('#newinvoicepaymentplan').removeClass('input-validation-error');
+            $('#newinvoicesaveid').prop('disabled', false);
+
+        } else if (valuedata > 0 && valuedata != 3002 && datevalue !== "" && planvalue > 0) {
+            //self.ChequeNoMain('');
+            //self.IsCreateNewInvoiceInInvalidateEnabled(true);
+            $('#newinvoicepaymentDate').addClass('input-validation-valid');
+            $('#newinvoicepaymentDate').removeClass('input-validation-error');
+            $('#newinvoicepaymentplan').addClass('input-validation-valid');
+            $('#newinvoicepaymentplan').removeClass('input-validation-error');
+            $('#newinvoicesaveid').prop('disabled', false);
+        } else {
+            $('#newinvoicesaveid').prop('disabled', true);
+            //self.IsCreateNewInvoiceInInvalidateEnabled(false);
+        }
+    }
+
+
+
+</script>

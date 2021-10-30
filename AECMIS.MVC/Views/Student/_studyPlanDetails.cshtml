@@ -1,0 +1,43 @@
+﻿<fieldset>
+    <legend>Study Plan Details</legend>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Curriculum</label>
+                <select class="form-control" id="curriculum" name="curriculum" data-bind="options: curriculumTypes, optionsCaption: '--select--', optionsText: 'Text', optionsValue: 'Value', value: Curriculum">
+            </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Payment Plan</label>
+                <select class="form-control" id="paymentPlan" name="paymentPlan" data-bind="options: paymentPlans, optionsCaption: '--select--', optionsText: 'PaymentPlanDisplay', optionsValue: 'PaymentPlanId', value: DefaultPaymentPlan">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Discount Amount</label>
+                <input class="form-control" type="number" data-bind="value: DiscountAmount"/>
+            </div>
+        </div>
+    </div>
+    <div data-bind="foreach: Sessions">
+        <div class="col-sm-4">
+            <label>
+                <input type="checkbox" data-bind="checked: $data.IsSelected, attr: { 'value': $data.SessionId }" />
+                <span data-bind="text: SessionDetails"></span>
+            </label>
+            <ul class="list-group" data-bind="foreach: $parent.SubjectsByCurriculumAndSession($data)">
+                <li class="list-group-item">
+                    <div class="radio">
+                        <label>
+                        <input type="radio" data-bind="attr: { name: $parent.SessionId, value: SubjectId }, checked: $parent.SessionSubjectsCheckedValues(SubjectId), disable: !$parent.IsSelected()" />
+                        <span data-bind="text: Name"></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</fieldset>

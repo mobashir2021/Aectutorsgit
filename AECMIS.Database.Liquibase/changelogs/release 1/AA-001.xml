@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">  
+  
+  
+  <changeSet author="aali" id="009.A">
+    <sql>
+      <![CDATA[
+      
+     create table [timetable].[TuitionCentre] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       Name varchar(50) NOT NULL,
+       [Address] varchar(150) NOT NULL
+       PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+create table [payment].[PaymentType]
+(
+Id  int IDENTITY(3001,1),
+[Description] varchar(20),
+SortOrder int
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+
+create table [payment].[InvoiceStatus]
+(
+Id  int IDENTITY(1001,1),
+[Description] varchar(20),
+SortOrder int
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+
+create table [timetable].[SessionAttendanceStatus]
+(
+Id  int IDENTITY(1001,1),
+[Description] varchar(20),
+SortOrder int
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+create table [timetable].[DaysOfWeek]
+(
+Id  int IDENTITY(0,1),
+[Description] varchar(20),
+SortOrder int
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+create table [timetable].[Curriculum](
+ Id  int IDENTITY(6001,1),
+ [Description] varchar(20),
+ SortOrder int
+ PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+create table [payment].[InvoiceType]
+(
+ Id int IDENTITY(5001,1),
+ [Description] varchar(20),
+ SortOrder int
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+create table [student].[InstituteType]
+(
+ Id int IDENTITY(4001,1),
+ [Description] varchar(20),
+ SortOrder int
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+create table [contact].[RelationType]
+(
+ Id int IDENTITY(3001,1),
+ [Description] varchar(20),
+ SortOrder int
+ 
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+    
+;
+
+create table [timetable].[Subject] (
+       Id  int IDENTITY(1,1) NOT NULL,
+       [Level] int NOT NULL,
+       Name varchar(20) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+ALTER TABLE [timetable].[Subject]
+ADD CONSTRAINT [FK_Subject_CurriculumID] FOREIGN KEY([Level])
+REFERENCES [timetable].[Curriculum] ([Id])
+;
+
+-- statement #9
+create table [payment].[PaymentPlan] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       Curriculum int NOT NULL,
+       Amount money NOT NULL,
+       TotalSessions INT NOT NULL,
+       IsDiscountedPlan bit not null
+ PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+ALTER TABLE [payment].[PaymentPlan]
+ADD CONSTRAINT [FK_PaymentPlan_CurriculumID] FOREIGN KEY([Curriculum])
+REFERENCES [timetable].[Curriculum] ([Id])
+;
+
+create table [student].[GenderType] (
+	
+ Id int IDENTITY(1001,1),
+ [Description] varchar(20),
+ SortOrder int
+ PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+    
+-- statement #6
+create table [timetable].[Session] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       ToTime DATETIME not null,
+       FromTime DATETIME not null,
+       [Day] int not null,
+       TutionCentre INT,
+ PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+ALTER TABLE [timetable].[Session]
+ADD CONSTRAINT [FK_Session_DayID] FOREIGN KEY([Day])
+REFERENCES [timetable].[DaysOfWeek] ([Id])
+;
+
+
+ALTER TABLE [timetable].[Session]
+ADD CONSTRAINT [FK_Session_CentreID] FOREIGN KEY([TutionCentre])
+REFERENCES [timetable].[TuitionCentre] ([Id])
+;
+
+-- statement #7
+create table [timetable].[SubjectsTaughtAtSession]
+  (
+     SessionId INT not null,
+     SubjectId INT not null,
+     CONSTRAINT uc_SubjectTaughtAtSessionID UNIQUE (SessionId,SubjectId)
+  )
+
+;
+
+ALTER TABLE [timetable].[SubjectsTaughtAtSession]
+ADD CONSTRAINT [FK_SubjectsTaughtAtSession_SessionID] FOREIGN KEY([SessionId])
+REFERENCES [timetable].[Session] ([Id])
+;
+
+ALTER TABLE [timetable].[SubjectsTaughtAtSession]
+ADD CONSTRAINT [FK_SubjectsTaughtAtSession_SubjectID] FOREIGN KEY([SubjectId])
+REFERENCES [timetable].[Subject] ([Id])
+;
+
+-- statement #3
+create table [teacher].[Teacher] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       FirstName varchar(100) NOT NULL,
+       LastName varchar(100) NOT NULL,
+       MiddleName varchar(100),
+       Age INT,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+-- statement #4
+create table [contact].[Address] (
+       Id int IDENTITY(1,1) NOT NULL,
+       AddressLine1 varchar(20),
+       AddressLine2 varchar(20),
+       AddressLine3 varchar(10),
+       AddressLine4 varchar(10),
+       AddressLine5 varchar(10),
+       City varchar(10),	
+       County varchar(10),
+       PostCode varchar(10),
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+-- statement #14
+create table [student].[Student] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       HasAccessToComputer bit,
+       AddressVerified bit,
+       Age INT,
+       DiscountedAmount money,
+       FirstLanguage varchar(20),
+       FirstName varchar(20) NOT NULL,
+       MiddleName varchar(20),
+       LastName varchar(20) NOT NULL,
+       Nationality varchar(20),
+       StudentNo varchar(20) NOT NULL,
+       SuffersIllness bit,
+       IllnessDetails varchar(150),
+       HobbiesAndInterests varchar(400),
+       IsMemberofClubOrSociety bit,
+       AddressId INT,
+       PaymentPlanId INT NOT NULL,
+       Gender int NOT NULL,
+       Curriculum int NOT NULL,
+       DateOfBirth date null,
+       Enabled bit not null
+       
+    PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+ALTER TABLE [student].[Student]
+ADD CONSTRAINT [FK_Student_AddressId] FOREIGN KEY([AddressId])
+REFERENCES [contact].[Address] ([Id])
+;
+
+ALTER TABLE [student].[Student]
+ADD CONSTRAINT [FK_Student_PaymentPlanId] FOREIGN KEY([PaymentPlanId])
+REFERENCES [payment].[PaymentPlan] ([Id])
+;
+
+ALTER TABLE [student].[Student]
+ADD CONSTRAINT [FK_Student_CurriculumId] FOREIGN KEY([Curriculum])
+REFERENCES [timetable].[Curriculum] ([Id])
+
+ALTER TABLE [student].[Student]
+ADD CONSTRAINT [FK_Student_Gender] FOREIGN KEY([Gender])
+REFERENCES [student].[GenderType] ([Id])
+
+-- statement #2
+create table [payment].[Invoice] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       DateOfGeneration DATETIME not null,
+       AppliedDiscount money NOT NULL,
+       SessionCredit INT NOT NULL,
+       TotalAmount money not null,
+       TotalAfterDiscounts money not null,
+       Status INT NOT NULL,
+       InvoiceType int not null,
+       StudentId INT not null,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [payment].[Invoice]
+ADD CONSTRAINT [FK_Invoice_InvoiceTypeID] FOREIGN KEY([InvoiceType])
+REFERENCES [payment].[InvoiceType] ([Id])
+;
+
+ALTER TABLE [payment].[Invoice] 
+ADD CONSTRAINT [FK_Invoice_StudentId] FOREIGN KEY([StudentId])
+REFERENCES [student].[Student] ([Id])
+;
+
+ALTER TABLE [payment].[Invoice]
+ADD CONSTRAINT [FK_Invoice_Status] FOREIGN KEY([Status])
+REFERENCES [payment].[InvoiceStatus] ([Id])
+;
+
+create table [timetable].[SessionRegisterStatus]
+(
+ Id int IDENTITY(1000,1),
+ [Description] varchar(20),
+ SortOrder int
+ 
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+    
+;
+
+create table [timetable].[SessionRegister] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       [Status] int not null,
+       Date Date not null,
+       SessionId int,
+       TuitionCentreId int NOT NULL
+ PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [timetable].[SessionRegister]
+ADD CONSTRAINT [FK_SessionRegister_SessionId] FOREIGN KEY([SessionId])
+REFERENCES [timetable].[Session] ([Id])
+;
+
+ALTER TABLE [timetable].[SessionRegister]
+ADD CONSTRAINT [FK_SessionRegister_Status] FOREIGN KEY([Status])
+REFERENCES [timetable].[SessionRegisterStatus] ([Id])
+;
+ALTER TABLE [timetable].[SessionRegister]
+ADD CONSTRAINT [FK_SessionRegister_CentreId] FOREIGN KEY([TuitionCentreId])
+REFERENCES [timetable].[TuitionCentre] ([Id])
+
+;
+
+
+-- statement #11
+create table [timetable].[SessionAttendance] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       [Status] int,
+       StudentId INT not null,
+       InvoiceId INT,
+       SessionRegisterId int not null,
+       PaymentAmountId int null,
+       PaymentType int null,
+       ChequeNo varchar(30) null,
+       RemainingCredits int not null
+ PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+ALTER TABLE [timetable].[SessionAttendance]
+ADD CONSTRAINT [FK_SessionAttendance_StudentId] FOREIGN KEY([StudentId])
+REFERENCES [student].[Student] ([Id])
+;
+
+
+ALTER TABLE [timetable].[SessionAttendance]
+ADD CONSTRAINT [FK_SessionAttendance_StatusId] FOREIGN KEY([Status])
+REFERENCES [timetable].[SessionAttendanceStatus] ([Id])
+;
+
+ALTER TABLE [timetable].[SessionAttendance]
+ADD CONSTRAINT [FK_SessionAttendance_RegisterId] FOREIGN KEY([SessionRegisterId])
+REFERENCES [timetable].[SessionRegister] ([Id])
+;
+
+ALTER TABLE [timetable].[SessionAttendance]
+ADD CONSTRAINT [FK_PaymentAmount_SessionAttendanceId] FOREIGN KEY([PaymentAmountId])
+REFERENCES [payment].[PaymentPlan] ([Id])
+
+;
+
+ALTER TABLE [timetable].[SessionAttendance]
+ADD CONSTRAINT [FK_SessionAttendance_PaymentType] FOREIGN KEY([PaymentType])
+REFERENCES [payment].[PaymentType] ([Id])
+;
+
+
+-- statement #1
+create table [timetable].[SubjectAttendance] 
+(
+	
+       [Id] [int] IDENTITY(1,1) NOT NULL,
+       Notes varchar(800),
+       SessionAttendanceId [INT] NOT NULL,
+       SubjectId INT not null,
+       TeacherId INT not null,
+       CONSTRAINT uc_SubjectAttendance UNIQUE (SessionAttendanceId ,SubjectId,TeacherId),
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+ALTER TABLE [timetable].[SubjectAttendance]
+ADD CONSTRAINT [FK_SubjectAttendance_SubjectId] FOREIGN KEY([SubjectId])
+REFERENCES [timetable].[Subject] ([Id])
+;
+
+ALTER TABLE [timetable].[SubjectAttendance]
+ADD CONSTRAINT [FK_SubjectAttendance_TeacherId] FOREIGN KEY([TeacherId])
+REFERENCES [teacher].[Teacher] ([Id])
+;
+
+ALTER TABLE [timetable].[SubjectAttendance]
+ADD CONSTRAINT [FK_SubjectAttendance_SessionAttendanceId] FOREIGN KEY([SessionAttendanceId])
+REFERENCES [timetable].[SessionAttendance] ([Id])
+;
+
+
+-- statement #5
+create table [student].[EducationInstitute] (
+	
+        Id  int IDENTITY(1,1) NOT NULL,
+       InstituteType int NOT NULL,
+       [From] DATETIME,
+       [To] DATETIME,
+       Ref varchar(30),
+       Name varchar(20),
+       Teacher varchar(20),
+       [Address] INT,
+       StudentId INT NOT NULL,
+       
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [student].[EducationInstitute]
+ADD CONSTRAINT [FK_EducationInstitute_InstituteTypeId] FOREIGN KEY([InstituteType])
+REFERENCES [student].[InstituteType] ([Id])
+;
+
+ALTER TABLE [student].[EducationInstitute]
+ADD CONSTRAINT [FK_EducationInstitute_AddressId] FOREIGN KEY([Address])
+REFERENCES [contact].[Address] ([Id])
+;
+
+ALTER TABLE [student].[EducationInstitute]
+ADD CONSTRAINT [FK_EducationInstitute_StudentId] FOREIGN KEY([StudentId])
+REFERENCES [student].[Student] ([Id])
+;
+
+
+CREATE TABLE [payment].[InvoicePayment](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[NumberOfSessionsPaidFor] [int] NULL,
+	[AmountPaid] [money] NULL,
+	[PaymentDate] [datetime] NOT NULL,
+	[InvoiceId] [int] NULL,
+	[PaymentType] [int] NULL,
+	[ChequeNo] [varchar](30) NULL,
+	[AttendanceId] [int] NULL,
+	[PaymentId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+;
+
+
+ALTER TABLE [payment].[InvoicePayment]  WITH CHECK ADD  CONSTRAINT [FK_InvoicePayment_AttendanceId] FOREIGN KEY([AttendanceId])
+REFERENCES [timetable].[SessionAttendance] ([Id])
+;
+
+ALTER TABLE [payment].[InvoicePayment] CHECK CONSTRAINT [FK_InvoicePayment_AttendanceId]
+;
+
+ALTER TABLE [payment].[InvoicePayment]  WITH CHECK ADD  CONSTRAINT [FK_InvoicePayment_InvoiceId] FOREIGN KEY([InvoiceId])
+REFERENCES [payment].[Invoice] ([Id])
+;
+
+ALTER TABLE [payment].[InvoicePayment] CHECK CONSTRAINT [FK_InvoicePayment_InvoiceId]
+;
+
+ALTER TABLE [payment].[InvoicePayment]  WITH CHECK ADD  CONSTRAINT [FK_InvoicePayment_PaymentID] FOREIGN KEY([PaymentId])
+REFERENCES [payment].[PaymentPlan] ([Id])
+;
+
+ALTER TABLE [payment].[InvoicePayment] CHECK CONSTRAINT [FK_InvoicePayment_PaymentID]
+;
+
+ALTER TABLE [payment].[InvoicePayment]  WITH CHECK ADD  CONSTRAINT [FK_InvoicePayment_PaymentType] FOREIGN KEY([PaymentType])
+REFERENCES [payment].[PaymentType] ([Id])
+;
+
+ALTER TABLE [payment].[InvoicePayment] CHECK CONSTRAINT [FK_InvoicePayment_PaymentType]
+;
+
+-- statement #8
+create table [payment].[InvoiceReciept] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       InvoiceId INT NOT NULL, 
+       PaymentId INT NOT NULL,
+       GeneratedDate DATETIME NOT NULL
+        
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [payment].[InvoiceReciept]
+ADD CONSTRAINT [FK_InvoiceReciept_InvoiceId] FOREIGN KEY([InvoiceId])
+REFERENCES [payment].[Invoice] ([Id])
+;
+
+ALTER TABLE [payment].[InvoiceReciept]
+ADD CONSTRAINT [FK_InvoiceReciept_PaymentId] FOREIGN KEY([PaymentId])
+REFERENCES [payment].[InvoicePayment] ([Id])
+;
+
+-- statement #12
+create table [contact].[Contact] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       Email varchar(10),
+       HomeNumber varchar(20),
+       MobileNumber varchar(20),
+       WorkNumber varchar(20)
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+-- statement #13
+create table [student].[StudentSubjects]
+  (
+     SessionId INT not null,
+     StudentId INT not null,
+     SubjectId INT not null,
+     Version   DATETIME not null,
+     CONSTRAINT uc_StudentSubjectsID UNIQUE (SessionId, StudentId, SubjectId)
+  )
+
+ALTER TABLE [student].[StudentSubjects]
+ADD CONSTRAINT [FK_StudentSubjects_SessionId] FOREIGN KEY([SessionId])
+REFERENCES [timetable].[Session] ([Id])
+;
+
+ALTER TABLE [student].[StudentSubjects]
+ADD CONSTRAINT [FK_StudentSubjects_StudentId] FOREIGN KEY([StudentId])
+REFERENCES [student].[Student] ([Id])
+;
+
+ALTER TABLE [student].[StudentSubjects]
+ADD CONSTRAINT [FK_StudentSubjects_SubjectId] FOREIGN KEY([SubjectId])
+REFERENCES [timetable].[Subject] ([Id])
+;
+
+
+-- statement #16
+create table [contact].[ContactPerson] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       Name varchar(20) NOT NULL,
+       Relation int NOT NULL,
+       AddressId INT,
+       ContactId INT,
+       StudentId INT NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [contact].[ContactPerson]
+ADD CONSTRAINT [FK_ContactPerson_RelationTypeId] FOREIGN KEY([Relation])
+REFERENCES [contact].[RelationType] ([Id])
+;
+
+ALTER TABLE [contact].[ContactPerson]
+ADD CONSTRAINT [FK_ContactPerson_AddressId] FOREIGN KEY([AddressId])
+REFERENCES [contact].[Address] ([Id])
+;
+
+
+ALTER TABLE [contact].[ContactPerson]
+ADD CONSTRAINT [FK_ContactPerson_ContactId] FOREIGN KEY([ContactId])
+REFERENCES [contact].[Contact] ([Id])
+;
+
+ALTER TABLE [contact].[ContactPerson]
+ADD CONSTRAINT [FK_ContactPerson_StudentId] FOREIGN KEY([StudentId])
+REFERENCES [student].[Student] ([Id])
+;
+
+-- statement #17
+create table [student].[Qualification] (
+	
+       Id  int IDENTITY(1,1) NOT NULL,
+       Result varchar(10) NOT NULL,
+       [Year] INT NOT NULL,
+       [Subject] varchar(10) NOT NULL,
+       InstituteId INT NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [student].[Qualification]
+ADD CONSTRAINT [FK_Qualification_InstituteId] FOREIGN KEY([InstituteId])
+REFERENCES [student].[EducationInstitute] ([Id])
+;
+
+CREATE TABLE [user].[Roles]
+(
+Id int IDENTITY(1,1) NOT NULL,
+RoleName varchar(20) NOT NULL
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+CREATE TABLE [user].[User]
+(
+  Id  int IDENTITY(1,1) NOT NULL,
+  UserName varchar(20) NOT NULL,
+  [Password] varchar(800) NOT NULL,
+   
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [user].[UserRoles]
+(
+ Id int IDENTITY(1,1) NOT NULL,
+ UserId int NOT NULL,
+ RoleId int NOT NULL
+CONSTRAINT [PK_user_UserRoles] PRIMARY KEY CLUSTERED 
+(
+    [Id] ASC
+),
+CONSTRAINT [UQ_user_UserRoles] UNIQUE NONCLUSTERED
+(
+    [UserId], [RoleId]
+)
+) ON [PRIMARY]
+;
+
+ALTER TABLE [user].[UserRoles]
+ADD CONSTRAINT [FK_UserRoles_UserID] FOREIGN KEY([UserId])
+REFERENCES [user].[User] ([Id])
+;
+
+ALTER TABLE [user].[UserRoles]
+ADD CONSTRAINT [FK_UserRoles_RoleID] FOREIGN KEY([RoleId])
+REFERENCES [user].[Roles] ([Id])
+;
+
+
+
+   
+
+ ]]>
+      
+    </sql>
+  </changeSet> 
+</databaseChangeLog>

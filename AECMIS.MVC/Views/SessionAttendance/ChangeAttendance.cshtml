@@ -1,0 +1,135 @@
+﻿<div class="modal fade modal-lg" id="changeattendance" tabindex="-1" role="dialog" aria-labelledby="statusAttendance" aria-hidden="true"
+     data-bind="dialog: isOpen">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="statusAttendance">Change Status of Attendance</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+
+                    <br />
+
+
+                    <form id="frmchangeattendance">
+                        <input type="hidden" data-bind="value:SelectedAttendance().SessionAttendanceId" name="sessionattendanceid" id="sessionattendanceid" />
+                        <input type="hidden" data-bind="value:SelectedAttendance().RemainingCredits" name="remainingcredits" id="remainingcredits" />
+                        <input type="hidden" data-bind="value:SelectedAttendance().IsDailyInvoiceData" name="isdailyinvoicedata" id="isdailyinvoicedata" />
+                        <input type="hidden" data-bind="value:SelectedAttendance().Status" name="status" id="status" />
+                        <input type="hidden" data-bind="value:SelectedAttendance().studentno" name="studentno" id="studentno" />
+                        <input type="hidden" data-bind="value:SelectedAttendance().InvoiceId" name="invoiceid" id="invoiceid" />
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Attendance Details</th>
+                                    <th>Status</th>
+                                    <th>Charged To</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+
+                                    <td data-bind="text: SelectedAttendance().Session"></td>
+                                    <td>
+                                        <select id="changestatus" name="changestatus" data-bind="options: SelectedAttendance().attendancestatus,
+                                           optionsText: 'AttendanceStatus',
+                                           optionsValue: 'AttendanceId'"></select>
+                                    </td>
+                                    <td>
+                                        <div data-bind="if:SelectedAttendance().IsFutureInvoiceAvailable" id="divfutureinvoiceshow">
+                                            <select id="selectfutureinvoice" data-bind="options: SelectedAttendance().listFutureInvoices,
+                                               optionsText: 'FIAValue',
+                                               optionsValue: 'FIAId', value: SelectedAttendance().FutureInvoiceSelect, event:{ change: SelectedAttendance().FutureInvoiceValueChanged }  "></select>
+                                        </div>
+                                        <div data-bind="ifnot:SelectedAttendance().IsFutureInvoiceAvailable" id="divfutureinvoicenotshow">
+                                            <label data-bind="text: SelectedAttendance().ChargedTo" id="idchargedtovaluenewtest"></label>
+                                        </div>
+                                        
+                                    </td>
+
+                                    <td class="buttons">
+                                        <a class="btn" href="#" title="newinvoice" id="createnewinvoice" data-bind=" visible: $root.IsNewInvoiceEnabledTrue ">
+                                            New Invoice
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                            @*<div class="row">
+                                <div class="col-sm-4"><span>Attendance Details</span></div>
+                                <div class="col-sm-3"><span>Status</span></div>
+                                <div class="col-sm-3"><span>Charged To</span></div>
+                                <div class="col-sm-2"><span></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><input type="text" readonly data-bind="value: SelectedAttendance().Session" name="txtsession" /></div>
+                                <div class="col-sm-2">
+                                    <select id="changestatus" name="changestatus" data-bind="options: SelectedAttendance().attendancestatus,
+                                           optionsText: 'AttendanceStatus',
+                                           optionsValue: 'AttendanceId'"></select>
+                                </div>
+                                <div class="col-sm-3"><input type="text" name="txtchargedto" data-bind="value: SelectedAttendance().ChargedTo" /></div>
+                                <div class="col-sm-2">
+                                    <a class="btn" href="#" title="newinvoice" id="createnewinvoice">
+                                        New Invoice
+                                    </a>
+                                </div>
+                            </div>*@
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-3"><a class="btn" href="#" title="savenewinvoiceCA" id="savenewinvoiceCA" data-bind=" visible: SelectedAttendance().IsSaveEnabled">Save</a></div>
+                                <div class="col-sm-2"><a data-bind="click: changeattendanceclose" class="btn" href="#" title="cancelchangestatus" id="cancelchangestatus">Cancel</a></div>
+                            </div>
+                            @*<table class="table table-condensed table-hover">
+                <tr>
+                    <th>Attendance Details</th>
+                    <th>Status</th>
+                    <th>Charged To</th>
+                    <th></th>
+
+                </tr>
+                <tr>
+                    <td data-bind="text:SelectedAttendance().Session"></td>
+                    <td>
+                        <select data-bind="options: SelectedAttendance().attendancestatus,
+                               optionsText: 'AttendanceStatus',
+                               optionsValue: 'AttendanceId'"></select>
+                    </td>
+                    <td></td>
+                    <td class="buttons">
+                        <a class="btn" href="#" title="newinvoice" id="createnewinvoice">
+                            New Invoice
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="buttons">
+                        <a class="btn" href="#" title="save" id="savenewinvoice">
+                            Save
+                        </a>
+                    </td>
+                    <td class="buttons">
+                        <a class="btn" href="#" title="cancelchangestatus" id="cancelchangestatus">
+                            Cancel
+                        </a>
+                    </td>
+                </tr>
+
+            </table>*@
+                    </form>
+
+                    <br /><br />
+                    <p style="text-align: center; font-style: italic; font-size: 10pt"></p>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

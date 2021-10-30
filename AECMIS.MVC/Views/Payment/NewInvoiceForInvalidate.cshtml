@@ -1,0 +1,72 @@
+﻿<div class="modal fade" id="newinvoiceinvalidate" tabindex="-1" role="dialog" aria-labelledby="newinvoiceinvalidate" aria-hidden="true"
+     data-bind="dialog: newinvoiceinvalidate">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="newinvoiceinvalidateh">New Invoice</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    
+
+                    <form id="frmchangeattendance">
+
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Invoice No</th>
+                                    <th>PaymentType</th>
+                                    <th>Payment</th>
+                                    <th>Payment Date</th>
+                                    <td class="nowrap">
+                                        Cheque No.
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label></label>
+                                    </td>
+                                    <td>
+                                        <select id="newinvoicepaymentTypeinvalidate" name="paymentType" data-bind="options:$root.lstPaymentTypeMain, optionsText:'PaymentTypeDesc',optionsValue:'PaymentTypeId', value: $root.PaymentTypeSelectedMain"></select>
+                                    </td>
+                                    <td>
+                                        <select id="newinvoicepaymentplaninvalidate" name="paymentPlan" data-bind="options:$root.lstPaymentPlanMain, optionsText:'PaymentPlanValue',optionsValue:'PaymentPlanId', value: $root.PaymentPlanSelectedMain"></select>
+                                    </td>
+                                    <td>
+                                        <input class="date paymentDateInput" type="text" name="PaymentDate" data-bind="value: $root.PaymentDateMain" 
+                                               readonly="readonly" id="newinvoicepaymentDate" />
+                                        <input type="hidden" data-bind="value: $root.SessionAttIdTemp()" id="hiddensessionid" />
+                                    </td>
+                                    <td>
+                                        <div data-bind="if:$root.PaymentTypeSelectedMain() == 3002">
+                                            <input type="text" id="newinvoicechequeNo" name="chequeNo" data-bind="value: $root.ChequeNoMain"
+                                                   maxlength="6" class="chequeInput" />
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-default pull-right" type="button" id="newcreateinvoicesaveid" data-bind="click: savenewinvoice, css: { disabled: !$root.IsInvalidatableNewInvoice() }">
+                                    Save
+                                </button>
+                                <button data-bind="click: newinvoiceforinvalidateclose" class="btn btn-default pull-right" type="button" id="newinvoicecloseid">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br /><br />
+                    <p style="text-align: center; font-style: italic; font-size: 10pt"></p>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

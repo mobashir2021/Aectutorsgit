@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+        @Styles.Render("~/Content/themes/base/css")
+        @Styles.Render("~/Content/bootstrap")
+        @*@Styles.Render("~/Content/datepicker")*@
+        @Styles.Render("~/Content/css")
+
+        @Scripts.Render("~/bundles/modernizr")
+        
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jquery-menu")
+        @Scripts.Render("~/bundles/knockout")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/moment")
+        @*@Scripts.Render("~/bundles/datepicker")*@
+
+        <script type='text/javascript'>
+            $(document).ready(function () {
+                $('.sidebar-toggle').click(function () {
+                    $('.wrapper').toggleClass('sidebar-show');
+                });
+                //$('.date').pickadate();
+            });
+
+            $(document).on("keydown", function (e) {
+                if (e.which === 8 && !$(e.target).is("input, textarea")) {
+                    e.preventDefault();
+                }
+            });
+            
+        </script>
+    <script type = 'text/javascript' >
+        var appInsights=window.appInsights||function(config)
+        {
+            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
+            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+        }({
+            instrumentationKey:'e65bbd67-bb0c-4d12-9eb7-6922e7d29fe1'
+        });
+        
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    </script>
+    </head>
+    <body>
+        <header>
+            <div class="header">
+              @*<img class="logo " src="@Url.Content("~/Images/aec_logo.jpg")" alt="AEC Tutors"/>
+              <img class="top_banner" src="@Url.Content("~/Images/top-banner.jpg")" />*@
+	        </div>
+        </header>
+        <div class="wrapper sidebar-show">
+            @if (@User.Identity.IsAuthenticated)
+            {
+                <button type="button" class="sidebar-toggle hidden-xs">Menu</button>
+            }
+            <div class="side-menu">
+            @if (@User.Identity.IsAuthenticated)
+            {
+                <div class="slashc-sliding-menu">
+                    <h1>
+                        <span>Home</span>
+                        <a title="" href="" class="slashc-sliding-menu-home"></a>
+                    </h1>
+                    <ul style="height: 200px; left: 0px;">
+                    <li>
+                        <a href="#"><span>Students</span></a>
+                        <ul style="left: 280px; top: 0px; display: none;">
+                            <li>
+                                <a href="@Url.Action("Get","Student")">Add New Student</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Student")">Search For Student</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","SessionAttendance")">View Student Attendances</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Payment")">View Student Invoices</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("CreateNewInvoice","Payment")">Create New Invoices</a>
+                            </li>
+                        </ul>
+                    </li>
+                        <li>
+                            <a href="#"><span>Session Registers</span></a>
+                            <ul style="left: 280px; top: 0px; display: none;">
+                                <li>
+                                    <a href="@Url.Action("Index","SessionRegister")">Search for a Register</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Get","SessionRegister")">New Register</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                            }
+                        </li>
+                    </ul>
+                </div> 
+            }
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="content col-xs-12">
+                        @RenderBody()
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <footer>
+            <div id="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-2"><h2>Accounting</h2></div>
+                        <div class="col-lg-10"></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

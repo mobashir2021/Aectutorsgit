@@ -1,0 +1,95 @@
+﻿<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="invoiceDetails" aria-hidden="true" 
+    data-bind="dialog: isOpen">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="invoiceDetails">Invoice Details</h4>
+      </div>
+      <div class="modal-body">
+
+<div class="table-responsive">
+    <h1></h1>
+    <br />
+    <h2>Invoice Information</h2>
+    <table class="table table-condensed table-hover">
+        <tr>
+            <td>Invoice Id:</td>
+            <td data-bind="text:SelectedInvoice().Id"></td>
+        </tr>
+        <tr>
+            <td>Invoice Ref No:</td>
+            <td data-bind="text:SelectedInvoice().InvoiceNo"></td>
+        </tr>
+        <tr>
+            <td>Student No:</td>
+            <td data-bind="text:SelectedInvoice().StudentNo"></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td data-bind="text:SelectedInvoice().Name"></td>
+        </tr>
+        <tr>
+            <td>Total:</td>
+            <td data-bind="text:SelectedInvoice().Total"></td>
+        </tr>
+        <tr>
+            <td>Discount Amount:</td>
+            <td data-bind="text:SelectedInvoice().Discount"></td>
+        </tr>
+        <tr>
+            <td>Gross:</td>
+            <td data-bind="text:SelectedInvoice().TotalAfterDiscount"></td>
+        </tr>
+        <tr>
+            <td data-bind="text:SelectedInvoice().VATLabel"></td>
+            <td data-bind="text:SelectedInvoice().VATAmount"></td>
+        </tr>
+        <tr>
+            <td>Total To Pay:</td>
+            <td data-bind="text:SelectedInvoice().TotalAfterDiscount"></td>
+        </tr>
+        <tr>
+            <td>Generation Date:</td>
+            <td data-bind="text:SelectedInvoice().DateOfGeneration"></td>
+        </tr>
+        <tr>
+            <td>Session Credits:</td>
+            <td data-bind="text:SelectedInvoice().SessionCredits"></td>
+        </tr>
+    </table>
+    <h3 data-bind="ifnot:SelectedInvoice().Reciept().AmountPaid">Please can you make the payment at your earliest convenience</h3>
+    <div data-bind="if:SelectedInvoice().Reciept().AmountPaid">
+        <h3>This invoice has been paid please see reciept details below</h3>
+        <br />
+        <h2>Reciept Information</h2>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <td>Amount Paid:</td>
+                <td data-bind="text:SelectedInvoice().Reciept().AmountPaid"></td>
+            </tr>
+            <tr>
+                <td>Payment Date:</td>
+                <td data-bind="text:SelectedInvoice().Reciept().PaymentDate"></td>
+            </tr>
+            <tr>
+                <td>Payment Type:</td>
+                <td data-bind="text:SelectedInvoice().Reciept().PaymentType"></td>
+            </tr>
+            <tr data-bind="if:SelectedInvoice().Reciept().ShowChequeNo()">
+                <td>Cheque No:</td>
+                <td data-bind="text:SelectedInvoice().Reciept().ChequeNo"></td>
+            </tr>
+            <tr>
+                <td>No Of Sessions:</td><td data-bind="text:SelectedInvoice().Reciept().NumberOfSessionsPaidFor"></td>
+            </tr>
+        </table>
+    </div>
+    <br /><br />
+    <p style="text-align: center; font-style: italic; font-size: 10pt"></p>
+</div>
+
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

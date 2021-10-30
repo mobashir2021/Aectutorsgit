@@ -1,0 +1,11 @@
+﻿<ul class="pagination pagination-sm">
+<li data-bind="css: { disabled: Pager().PageIndex === 0 }">
+<a href="#" data-bind="click: Pager().previousPage"><span>&laquo;</span></a>
+</li>
+<li data-bind="foreach: Pager().allPages, css: { active: $data.pageNumber === ($root.Pager().PageIndex() + 1) }">
+<a href="#" data-bind="text: $data.pageNumber, click: function() { $root.Pager().moveToPage($data.pageNumber-1); }"></a>
+</li>
+<li data-bind="css: { disabled: Pager().PageIndex === Pager().MaxPageIndex }">
+<a href="#" data-bind="click: Pager().nextPage"><span>&raquo;</span></a>
+</li>
+</ul>
